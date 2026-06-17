@@ -9,24 +9,31 @@ class Ping(commands.Cog):
 
     @commands.command()
     async def ping(self, ctx: commands.Context):
-        await ctx.send("Pong!")
-
-    @commands.command()
-    async def pong(self, ctx: commands.Context):
-        await ctx.send("Ping!")
-
-    @app_commands.command(name="ping", description="Pong! Shows the current bot latency.")
-    async def embed_base(self, interaction: discord.Interaction):
+        print("Ping triggered.")
         bot_ping = round(self.bot.latency * 1000)
         
         embed = discord.Embed(
             title="Pong!",
-            description=f"Ping: {bot_ping}ms",
+            description=f"Latency: {bot_ping}ms",
             color=discord.Color(0x00ff00),
             timestamp=datetime.datetime.now(datetime.timezone.utc)
         )
         
-        await interaction.response.send_message(embed=embed)
+        await ctx.send(embed=embed)
+
+    @commands.command()
+    async def pong(self, ctx: commands.Context):
+        print("Pong triggered.")
+        bot_ping = round(self.bot.latency * 1000)
+        
+        embed = discord.Embed(
+            title="Ping!",
+            description=f"Latency: {bot_ping}ms",
+            color=discord.Color(0x00ff00),
+            timestamp=datetime.datetime.now(datetime.timezone.utc)
+        )
+        
+        await ctx.send(embed=embed)
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Ping(bot))
