@@ -3,6 +3,10 @@ import asyncio
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
+from pathlib import Path
+
+env_path = Path(__file__).resolve().parent / '.env'
+load_dotenv(dotenv_path=env_path)
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix = "m!", \
@@ -15,16 +19,29 @@ async def on_ready():
     print(f"Logged in as {bot.user}")
 
 @bot.command()
+@commands.is_owner()
+async def sync(ctx: commands.Context):
+    await ctx.send("Syncing application commands... please wait.")
+    try:
+        synced = await bot.tree.sync()
+        await ctx.send(f"Successfully synced {len(synced)} global slash command(s).")
+    except Exception as e:
+        await ctx.send(f"Failed to sync commands: {e}")
+
+@bot.command()
+@commands.is_owner()
 async def load(ctx, extension):
     await bot.load_extension(f"cogs.{extension}")
     await ctx.send(f"Loaded {extension}.")
 
 @bot.command()
+@commands.is_owner()
 async def unload(ctx, extension):
     await bot.unload_extension(f"cogs.{extension}")
     await ctx.send(f"Unloaded {extension}.")
 
 @bot.command()
+@commands.is_owner()
 async def reload(ctx, extension):
     await bot.reload_extension(f"cogs.{extension}")
     await ctx.send(f"Reloaded {extension}.")
