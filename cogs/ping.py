@@ -11,28 +11,24 @@ class Ping(commands.Cog):
     async def ping(self, ctx: commands.Context):
         print("Ping triggered.")
         bot_ping = round(self.bot.latency * 1000)
-        
         embed = discord.Embed(
             title="Pong!",
             description=f"Latency: {bot_ping}ms",
             color=discord.Color(0x00ff00),
             timestamp=datetime.datetime.now(datetime.timezone.utc)
         )
-        
         await ctx.send(embed=embed)
 
     @commands.command()
     async def pong(self, ctx: commands.Context):
         print("Pong triggered.")
         bot_ping = round(self.bot.latency * 1000)
-        
         embed = discord.Embed(
             title="Ping!",
             description=f"Latency: {bot_ping}ms",
             color=discord.Color(0x00ff00),
             timestamp=datetime.datetime.now(datetime.timezone.utc)
         )
-        
         await ctx.send(embed=embed)
 
 async def setup(bot: commands.Bot):
