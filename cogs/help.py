@@ -22,7 +22,13 @@ class CustomHelpClass(commands.HelpCommand):
         embed.add_field(
             name="Gameplay commands",
             value=f"`m!mine` - Venture into the deep caves for resources.\n\
-                    `m!chop` - Head to the vast forests and chop for wood.",
+                    `m!chop` - Head to the vast forests and chop for wood.\n\
+                    `m!adventure` - Head out to the vast world to loot for structures!",
+            inline=False
+        )
+        embed.add_field(
+            name="Economy commands",
+            value=f"`m!inventory` - View your current inventory.",
             inline=False
         )
         embed.add_field(

@@ -25,7 +25,13 @@ class Alias(commands.Cog):
         embed.add_field(
             name="Gameplay commands",
             value=f"`m!mine` - `m!m`\n\
-                    `m!chop` - `m!c`",
+                    `m!chop` - `m!c`\n\
+                    `m!adventure` - `m!adv`",
+            inline=True
+        )
+        embed.add_field(
+            name="Economy commands",
+            value=f"`m!inventory` - `m!inv`",
             inline=True
         )
         embed.add_field(
