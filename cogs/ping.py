@@ -7,7 +7,7 @@ class Ping(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(aliases=["pi"])
     async def ping(self, ctx: commands.Context):
         bot_ping = round(self.bot.latency * 1000)
         embed = discord.Embed(
@@ -18,7 +18,7 @@ class Ping(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(aliases=["po"])
     async def pong(self, ctx: commands.Context):
         bot_ping = round(self.bot.latency * 1000)
         embed = discord.Embed(

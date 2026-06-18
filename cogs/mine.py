@@ -27,7 +27,7 @@ class Mine(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-    @commands.group(invoke_without_command=True)
+    @commands.group(invoke_without_command=True, aliases=["m"])
     async def mine(self, ctx: commands.Context):
         embed = discord.Embed(
             title="Mining",
@@ -37,7 +37,7 @@ class Mine(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @mine.command()
+    @mine.command(aliases=["o", "ow"])
     async def overworld(self, ctx: commands.Context):
         loot_lines = []
         for name, min_val, max_val in self.LOOT_TABLES["overworld"]:
@@ -58,7 +58,7 @@ class Mine(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @mine.command()
+    @mine.command(aliases=["n"])
     async def nether(self, ctx: commands.Context):
         loot_lines = []
         for name, min_val, max_val in self.LOOT_TABLES["nether"]:
@@ -79,7 +79,7 @@ class Mine(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @mine.command()
+    @mine.command(aliases=["e"])
     async def end(self, ctx: commands.Context):
         loot_lines = []
         for name, min_val, max_val in self.LOOT_TABLES["end"]:

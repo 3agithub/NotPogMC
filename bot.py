@@ -18,7 +18,7 @@ bot = commands.Bot(command_prefix = "m!", \
 async def on_ready():
     print(f"Logged in as {bot.user}")
 
-@bot.command()
+@bot.command(aliases=["sl"])
 @commands.is_owner()
 async def slash(ctx, action: str, scope: str = "global"):
     if action == "sync":
@@ -43,19 +43,19 @@ async def slash(ctx, action: str, scope: str = "global"):
         except Exception as e: await ctx.send(f"Failed to clear commands: {e}")   
     else: await ctx.send("Invalid action specified. Use `sync` or `clear`.")
 
-@bot.command()
+@bot.command(aliases=["lo"])
 @commands.is_owner()
 async def load(ctx, extension):
     await bot.load_extension(f"cogs.{extension}")
     await ctx.send(f"Loaded {extension}.")
 
-@bot.command()
+@bot.command(aliases=["ul"])
 @commands.is_owner()
 async def unload(ctx, extension):
     await bot.unload_extension(f"cogs.{extension}")
     await ctx.send(f"Unloaded {extension}.")
 
-@bot.command()
+@bot.command(aliases=["rl"])
 @commands.is_owner()
 async def reload(ctx, extension):
     await bot.reload_extension(f"cogs.{extension}")

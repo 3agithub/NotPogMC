@@ -93,7 +93,7 @@ class Chop(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-    @commands.group(invoke_without_command=True)
+    @commands.group(invoke_without_command=True, aliases=["c"])
     async def chop(self, ctx: commands.Context):
         embed = discord.Embed(
             title="Chopping",
@@ -103,7 +103,7 @@ class Chop(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @chop.command()
+    @chop.command(aliases=["o", "ow"])
     async def overworld(self, ctx: commands.Context):
         result = run_chop_action("overworld")
         if "error" in result:
@@ -128,7 +128,7 @@ class Chop(commands.Cog):
 
         await ctx.send(embed=embed)
     
-    @chop.command()
+    @chop.command(aliases=["n"])
     async def nether(self, ctx: commands.Context):
         result = run_chop_action("nether")
         if "error" in result:
@@ -152,7 +152,7 @@ class Chop(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @chop.command()
+    @chop.command(aliases=["e"])
     async def end(self, ctx: commands.Context):
         result = run_chop_action("end")
         if "error" in result:

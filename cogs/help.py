@@ -15,13 +15,14 @@ class CustomHelpClass(commands.HelpCommand):
         embed.add_field(
             name="Help commands",
             value=f"`m!help` - This page.\n\
-                `m!info` - Information about the bot.",
+                    `m!info` - Information about the bot.\n\
+                    `m!alias` - A list of all command aliases.",
             inline=False
         )
         embed.add_field(
             name="Gameplay commands",
             value=f"`m!mine` - Venture into the deep caves for resources.\n\
-                `m!chop` - Head to the vast forests and chop for wood.",
+                    `m!chop` - Head to the vast forests and chop for wood.",
             inline=False
         )
         embed.add_field(
@@ -40,7 +41,7 @@ class Help(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         self._original_help_command = bot.help_command
-        bot.help_command = CustomHelpClass()
+        bot.help_command = CustomHelpClass(command_attrs={"aliases": ["h", "?"]})
         bot.help_command.cog = self
 
     def cog_unload(self):
