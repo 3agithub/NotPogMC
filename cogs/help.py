@@ -4,7 +4,7 @@ from discord.ext import commands
 
 class CustomHelpClass(commands.HelpCommand):
     def __init__(self):
-        super().__init__()
+        super().__init__(command_attrs={"aliases": ["h", "?"]})
 
     async def send_bot_help(self, mapping):
         embed=discord.Embed(
@@ -41,7 +41,7 @@ class Help(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         self._original_help_command = bot.help_command
-        bot.help_command = CustomHelpClass(command_attrs={"aliases": ["h", "?"]})
+        bot.help_command = CustomHelpClass()
         bot.help_command.cog = self
 
     def cog_unload(self):
