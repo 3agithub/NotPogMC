@@ -9,14 +9,14 @@ env_path = Path(__file__).resolve().parent / '.env'
 load_dotenv(dotenv_path=env_path)
 
 intents = discord.Intents.all()
-bot = commands.Bot(command_prefix = "m!", \
-                    intents = intents, \
-                    activity = discord.Activity(type=discord.ActivityType.listening, name="m!help"), \
-                    status = discord.Status.do_not_disturb)
+bot = commands.AutoShardedBot(command_prefix = "m!", \
+                              intents = intents, \
+                              activity = discord.Activity(type=discord.ActivityType.listening, name="m!help"), \
+                              status = discord.Status.do_not_disturb)
 
 @bot.event
 async def on_ready():
-    print(f"Logged in as {bot.user}")
+    print(f"Logged in as {bot.user}. Total shards: {bot.shard_count}")
 
 @bot.command(aliases=["sl"])
 @commands.is_owner()

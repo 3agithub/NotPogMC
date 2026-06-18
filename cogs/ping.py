@@ -17,6 +17,7 @@ class Ping(commands.Cog):
             timestamp=datetime.datetime.now(datetime.timezone.utc)
         )
         embed.set_author(name = ctx.author.name, icon_url = ctx.author.display_avatar.url)
+        embed.set_footer(text = f"Shard #{ctx.guild.shard_id + 1}")
         await ctx.send(embed=embed)
 
     @commands.command(aliases=["po"])
@@ -29,6 +30,7 @@ class Ping(commands.Cog):
             timestamp=datetime.datetime.now(datetime.timezone.utc)
         )
         embed.set_author(name = ctx.author.name, icon_url = ctx.author.display_avatar.url)
+        embed.set_footer(text = f"Shard #{ctx.guild.shard_id + 1}")
         await ctx.send(embed=embed)
 
 async def setup(bot: commands.Bot):

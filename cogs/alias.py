@@ -35,7 +35,7 @@ class Alias(commands.Cog):
             inline=True
         )
         embed.set_author(name = ctx.author.name, icon_url = ctx.author.display_avatar.url)
-        embed.set_footer(text=f"Aliases are still in progress. / means the command does not have an alias.\nThis is not the place to look for help. If you're finding help, please check m!help for all commands and their uses.")
+        embed.set_footer(text=f"Aliases are still in progress. / means the command does not have an alias.\nThis is not the place to look for help. If you're finding help, please check m!help for all commands and their uses. · Shard #{ctx.guild.shard_id + 1}")
         await ctx.send(embed=embed)
 
 async def setup(bot: commands.Bot):

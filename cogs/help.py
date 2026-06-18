@@ -36,6 +36,7 @@ class CustomHelpClass(commands.HelpCommand):
             inline=False
         )
         embed.set_author(name = self.context.author.name, icon_url = self.context.author.display_avatar.url)
+        embed.set_footer(text = f"Shard #{self.context.guild.shard_id + 1}")
         await self.get_destination().send(embed=embed)
 
 class Help(commands.Cog):
