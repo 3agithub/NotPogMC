@@ -16,7 +16,7 @@ class Info(commands.Cog):
                 Prefix: `m!`\n\
                 For a list of all commands, type `m!help`.\n\n\
                 If you have any questions, suggestions, or just want to chat, feel free to join our support server: `https://discord.gg/z4AVuyKsyc (Verification is needed)`",
-            color=discord.Color(0x00ff00),
+            color=discord.Color(0xfff5d1),
             timestamp=datetime.datetime.now(datetime.timezone.utc)
         )
         embed.set_author(name = ctx.author.name, icon_url = ctx.author.display_avatar.url)
