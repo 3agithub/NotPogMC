@@ -3,27 +3,13 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 from random import randint
+from loot_tables import MINE as LOOT_TABLES
 
 def loot_num(min, max):
     res = randint(0, 1000)
     return [res / 1000 * (max - min) + min, res]
 
 class Mine(commands.Cog):
-    LOOT_TABLES = {
-        "overworld": [
-            ("Cobblestone", 256, 1024), ("Coal", 0, 60), ("Iron Ingot", 0, 16),
-            ("Copper Ingot", 0, 32), ("Gold Ingot", 0, 8), ("Redstone Dust", 0, 24),
-            ("Lapis Lazuli", 0, 12), ("Diamond", 0, 4), ("Emerald", 0, 2)
-        ],
-        "nether": [
-            ("Netherrack", 384, 1296), ("Nether Quartz", 0, 192), ("Gold Nugget", 0, 320),
-            ("Glowstone Dust", 0, 192), ("Ancient Debris", 0, 2)
-        ],
-        "end": [
-            ("End Stone", 192, 768)
-        ]
-    }
-
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
