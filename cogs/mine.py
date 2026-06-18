@@ -29,7 +29,6 @@ class Mine(commands.Cog):
 
     @commands.group(invoke_without_command=True)
     async def mine(self, ctx: commands.Context):
-        print("Mine triggered.")  
         embed = discord.Embed(
             title="Mining",
             description=f"Explore different dimensions and mine for resources!\nOverworld: `m!mine overworld`\nNether: `m!mine nether`\nEnd: `m!mine end`",
@@ -40,8 +39,6 @@ class Mine(commands.Cog):
 
     @mine.command()
     async def overworld(self, ctx: commands.Context):
-        print("Overworld mining triggered.")
-        
         loot_lines = []
         for name, min_val, max_val in self.LOOT_TABLES["overworld"]:
             roll = loot_num(min_val, max_val)
@@ -63,8 +60,6 @@ class Mine(commands.Cog):
 
     @mine.command()
     async def nether(self, ctx: commands.Context):
-        print("Nether mining triggered.")
-        
         loot_lines = []
         for name, min_val, max_val in self.LOOT_TABLES["nether"]:
             roll = loot_num(min_val, max_val)
@@ -86,8 +81,6 @@ class Mine(commands.Cog):
 
     @mine.command()
     async def end(self, ctx: commands.Context):
-        print("End mining triggered.")
-        
         loot_lines = []
         for name, min_val, max_val in self.LOOT_TABLES["end"]:
             roll = loot_num(min_val, max_val)

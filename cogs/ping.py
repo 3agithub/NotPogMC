@@ -9,7 +9,6 @@ class Ping(commands.Cog):
 
     @commands.command()
     async def ping(self, ctx: commands.Context):
-        print("Ping triggered.")
         bot_ping = round(self.bot.latency * 1000)
         embed = discord.Embed(
             title="Pong!",
@@ -21,7 +20,6 @@ class Ping(commands.Cog):
 
     @commands.command()
     async def pong(self, ctx: commands.Context):
-        print("Pong triggered.")
         bot_ping = round(self.bot.latency * 1000)
         embed = discord.Embed(
             title="Ping!",

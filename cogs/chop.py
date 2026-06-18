@@ -95,7 +95,6 @@ class Chop(commands.Cog):
 
     @commands.group(invoke_without_command=True)
     async def chop(self, ctx: commands.Context):
-        print("Chop triggered.")  
         embed = discord.Embed(
             title="Chopping",
             description=f"Explore different dimensions and chop for resources!\nOverworld: `m!chop overworld`\nNether: `m!chop nether`\nEnd: `m!chop end`",
@@ -106,8 +105,6 @@ class Chop(commands.Cog):
 
     @chop.command()
     async def overworld(self, ctx: commands.Context):
-        print("Overworld chopping triggered.")
-        
         result = run_chop_action("overworld")
         if "error" in result:
             return await ctx.send(result["error"])
@@ -133,8 +130,6 @@ class Chop(commands.Cog):
     
     @chop.command()
     async def nether(self, ctx: commands.Context):
-        print("Nether chopping triggered.")
-        
         result = run_chop_action("nether")
         if "error" in result:
             return await ctx.send(result["error"])
@@ -159,8 +154,6 @@ class Chop(commands.Cog):
 
     @chop.command()
     async def end(self, ctx: commands.Context):
-        print("End chopping triggered.")
-        
         result = run_chop_action("end")
         if "error" in result:
             return await ctx.send(result["error"])

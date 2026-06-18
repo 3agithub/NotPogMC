@@ -21,7 +21,6 @@ async def on_ready():
 @bot.command()
 @commands.is_owner()
 async def slash(ctx, action: str, scope: str = "global"):
-    print(f"Slash triggered: action={action}, scope={scope}")
     if action == "sync":
         await ctx.send(f"Syncing {scope} application commands... please wait.")
         try:
