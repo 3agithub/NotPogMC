@@ -20,13 +20,29 @@ async def on_ready():
 
 @bot.command()
 @commands.is_owner()
-async def sync(ctx: commands.Context):
-    await ctx.send("Syncing application commands... please wait.")
-    try:
-        synced = await bot.tree.sync()
-        await ctx.send(f"Successfully synced {len(synced)} global slash command(s).")
-    except Exception as e:
-        await ctx.send(f"Failed to sync commands: {e}")
+async def slash(ctx, action: str, scope: str = "global"):
+    print(f"Slash triggered: action={action}, scope={scope}")
+    if action == "sync":
+        await ctx.send(f"Syncing {scope} application commands... please wait.")
+        try:
+            if scope == "global": synced = await bot.tree.sync()
+            elif scope == "guild": synced = await bot.tree.sync(guild=ctx.guild)
+            else: return await ctx.send("Invalid scope. Use `global` or `guild`.")
+            await ctx.send(f"Successfully synced {len(synced)} {scope} slash command(s).") 
+        except Exception as e: await ctx.send(f"Failed to sync commands: {e}")
+    elif action == "clear":
+        try:
+            if scope == "global":
+                bot.tree.clear_commands(guild=None)
+                await bot.tree.sync()
+                await ctx.send("Global slash commands unregistered!")
+            elif scope == "guild":
+                bot.mtree.clear_commands(guild=ctx.guild)
+                await bot.tree.sync(guild=ctx.guild)
+                await ctx.send("Guild-specific slash commands unregistered!")
+            else: await ctx.send("Invalid scope specified. Use `global` or `guild`.")
+        except Exception as e: await ctx.send(f"Failed to clear commands: {e}")   
+    else: await ctx.send("Invalid action specified. Use `sync` or `clear`.")
 
 @bot.command()
 @commands.is_owner()
