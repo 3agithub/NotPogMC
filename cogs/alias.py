@@ -34,8 +34,7 @@ class Alias(commands.Cog):
                     `m!pong` - `m!po`",
             inline=True
         )
-        embed.set_footer(text="Aliases are still in progress. / means the command does not have an alias.\n\
-                         This is not the place to look for help. If you're finding help, please check m!help for all commands and their uses.")
+        embed.set_footer(text=f"Aliases are still in progress. / means the command does not have an alias.\nThis is not the place to look for help. If you're finding help, please check m!help for all commands and their uses.")
         await ctx.send(embed=embed)
 
 async def setup(bot: commands.Bot):
