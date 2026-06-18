@@ -35,6 +35,7 @@ class CustomHelpClass(commands.HelpCommand):
             value=f"https://discord.gg/z4AVuyKsyc (Verification is needed)",
             inline=False
         )
+        embed.set_author(name = self.context.author.name, icon_url = self.context.author.display_avatar.url)
         await self.get_destination().send(embed=embed)
 
 class Help(commands.Cog):

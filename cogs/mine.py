@@ -35,6 +35,7 @@ class Mine(commands.Cog):
             color=discord.Color(0x333333),
             timestamp=datetime.datetime.now(datetime.timezone.utc)
         )
+        embed.set_author(name = ctx.author.name, icon_url = ctx.author.display_avatar.url)
         await ctx.send(embed=embed)
 
     @mine.command(aliases=["o", "ow"])
@@ -56,6 +57,7 @@ class Mine(commands.Cog):
             color=discord.Color(0x228b22),
             timestamp=datetime.datetime.now(datetime.timezone.utc)
         )
+        embed.set_author(name = ctx.author.name, icon_url = ctx.author.display_avatar.url)
         await ctx.send(embed=embed)
 
     @mine.command(aliases=["n"])
@@ -77,6 +79,7 @@ class Mine(commands.Cog):
             color=discord.Color(0xff4500),
             timestamp=datetime.datetime.now(datetime.timezone.utc)
         )
+        embed.set_author(name = ctx.author.name, icon_url = ctx.author.display_avatar.url)
         await ctx.send(embed=embed)
 
     @mine.command(aliases=["e"])
@@ -98,6 +101,7 @@ class Mine(commands.Cog):
             color=discord.Color(0x9370db),
             timestamp=datetime.datetime.now(datetime.timezone.utc)
         )
+        embed.set_author(name = ctx.author.name, icon_url = ctx.author.display_avatar.url)
         await ctx.send(embed=embed)
 
 async def setup(bot: commands.Bot):

@@ -16,6 +16,7 @@ class Ping(commands.Cog):
             color=discord.Color(0x00ff00),
             timestamp=datetime.datetime.now(datetime.timezone.utc)
         )
+        embed.set_author(name = ctx.author.name, icon_url = ctx.author.display_avatar.url)
         await ctx.send(embed=embed)
 
     @commands.command(aliases=["po"])
@@ -27,6 +28,7 @@ class Ping(commands.Cog):
             color=discord.Color(0x00ff00),
             timestamp=datetime.datetime.now(datetime.timezone.utc)
         )
+        embed.set_author(name = ctx.author.name, icon_url = ctx.author.display_avatar.url)
         await ctx.send(embed=embed)
 
 async def setup(bot: commands.Bot):
