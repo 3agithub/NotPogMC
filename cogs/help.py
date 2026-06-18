@@ -32,8 +32,9 @@ class CustomHelpClass(commands.HelpCommand):
             inline=False
         )
         embed.add_field(
-            name="Technical commands",
-            value=f"`m!ping` / `m!pong` - Check the bot latency.",
+            name="Other commands",
+            value=f"`m!ping` / `m!pong` - Check the bot latency.\n\
+                    `m!credits` - See who made this bot possible!",
             inline=False
         )
         embed.add_field(

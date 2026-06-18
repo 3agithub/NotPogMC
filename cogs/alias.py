@@ -35,9 +35,10 @@ class Alias(commands.Cog):
             inline=True
         )
         embed.add_field(
-            name="Technical commands",
+            name="Other commands",
             value=f"`m!ping` - `m!pi`\n\
-                    `m!pong` - `m!po`",
+                    `m!pong` - `m!po`\n\
+                    `m!credits` - `m!cre`",
             inline=True
         )
         embed.set_author(name = ctx.author.name, icon_url = ctx.author.display_avatar.url)
