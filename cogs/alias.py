@@ -35,6 +35,11 @@ class Alias(commands.Cog):
             inline=True
         )
         embed.add_field(
+            name="Other gameplay commands",
+            value=f"`m!kill` - `m!die`, `m!suicide`",
+            inline=False
+        )
+        embed.add_field(
             name="Other commands",
             value=f"`m!ping` - `m!pi`\n\
                     `m!pong` - `m!po`\n\

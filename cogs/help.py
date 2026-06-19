@@ -32,6 +32,11 @@ class CustomHelpClass(commands.HelpCommand):
             inline=False
         )
         embed.add_field(
+            name="Other gameplay commands",
+            value=f"`m!kill` - Kill your character and reset your inventory.",
+            inline=False
+        )
+        embed.add_field(
             name="Other commands",
             value=f"`m!ping` / `m!pong` - Check the bot latency.\n\
                     `m!credits` - See who made this bot possible!",
