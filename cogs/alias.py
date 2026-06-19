@@ -63,12 +63,12 @@ class Alias(commands.Cog):
             value=f"`m!mine overworld` - `m!m o`, `m!m ow`\n\
                     `m!mine nether` - `m!m n`\n\
                     `m!mine end` - `m!m e`",
-            inline=True
+            inline=False
         )
         embed.add_field(
             name="Other commands",
             value=f"`m!alias mine` - `m!a m`, `m!aliases m`",
-            inline=True
+            inline=False
         )
         embed.set_author(name = ctx.author.name, icon_url = ctx.author.display_avatar.url)
         embed.set_footer(text=f"Shard #{ctx.guild.shard_id + 1}")
@@ -87,12 +87,12 @@ class Alias(commands.Cog):
             value=f"`m!chop overworld` - `m!c o`, `m!c ow`\n\
                     `m!chop nether` - `m!c n`\n\
                     `m!chop end` - `m!c e`",
-            inline=True
+            inline=False
         )
         embed.add_field(
             name="Other commands",
             value=f"`m!alias chop` - `m!a c`, `m!aliases c`",
-            inline=True
+            inline=False
         )
         embed.set_author(name = ctx.author.name, icon_url = ctx.author.display_avatar.url)
         embed.set_footer(text=f"Shard #{ctx.guild.shard_id + 1}")
@@ -111,14 +111,14 @@ class Alias(commands.Cog):
             value=f"`m!adventure overworld` - `m!adv o`, `m!adv ow`\n\
                     `m!adventure nether` - `m!adv n`\n\
                     `m!adventure end` - `m!adv e`",
-            inline=True
+            inline=False
         )
         embed.add_field(
             name="Subcommands · Biome Adventures (Overworld)",
             value=f"`m!adventure desert` - `m!adv d`\n\
                     `m!adventure jungle` - `m!adv j`\n\
                     `m!adventure ocean` - `m!adv oc`",
-            inline=True
+            inline=False
         )
         embed.add_field(
             name="Subcommands · Biome Adventures (Nether)",
@@ -127,12 +127,12 @@ class Alias(commands.Cog):
                     `m!adventure warped` - `m!adv wf`, `m!adv warpedforest`\n\
                     `m!adventure soulsand` - `m!adv ss`, `m!adv ssv`, `m!adv soulsandvalley`\n\
                     `m!adventure basalt` - `m!adv bd`, `m!adv basaltdeltas`",
-            inline=True
+            inline=False
         )
         embed.add_field(
             name="Other commands",
             value=f"`m!alias adventure` - `m!a adv`, `m!aliases adv`",
-            inline=True
+            inline=False
         )
         embed.set_author(name = ctx.author.name, icon_url = ctx.author.display_avatar.url)
         embed.set_footer(text=f"Shard #{ctx.guild.shard_id + 1}")
