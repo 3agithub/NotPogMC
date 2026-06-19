@@ -189,7 +189,7 @@ def run_adventure_action(dimension: str, target_biome: str = None) -> dict:
                             aggregated_drops[item_name]["rolls"].append(roll_val)
             
             ship_static_loot = [
-                ("Health Potion", 2),
+                ("Potion of Healing (Instant Health: +8 HP)", 2),
                 ("Elytra", 1)
             ]
             
