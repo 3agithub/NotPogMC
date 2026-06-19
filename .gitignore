@@ -55,6 +55,9 @@ cover/
 *.mo
 *.pot
 
+# Databases:
+*.db
+
 # Django stuff:
 *.log
 local_settings.py
@@ -217,3 +220,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# NotPogMC item IDs:
+convert.py
+formatted_registry.txt
+items.csv
