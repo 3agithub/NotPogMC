@@ -2267,7 +2267,7 @@ ADVENTURE = {
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
-                        ("Buried Treasure Map", 1, 1, 1)
+                        ("Map", 1, 1, 1) # buried treasure map
                     ]
                 },
                 {
