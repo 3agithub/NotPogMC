@@ -1,15 +1,15 @@
 MINE = {
         "overworld": [
-            ("Cobblestone", 256, 1024), ("Coal", 0, 60), ("Iron Ingot", 0, 16),
-            ("Copper Ingot", 0, 32), ("Gold Ingot", 0, 8), ("Redstone Dust", 0, 24),
+            ("Cobblestone", 128, 512), ("Coal", 0, 60), ("Raw Iron", 0, 16),
+            ("Raw Copper", 0, 32), ("Raw Gold", 0, 8), ("Redstone Dust", 0, 24),
             ("Lapis Lazuli", 0, 12), ("Diamond", 0, 4), ("Emerald", 0, 2)
         ],
         "nether": [
-            ("Netherrack", 384, 1296), ("Nether Quartz", 0, 192), ("Gold Nugget", 0, 320),
-            ("Glowstone Dust", 0, 192), ("Ancient Debris", 0, 2)
+            ("Netherrack", 192, 576), ("Nether Quartz", 0, 96), ("Gold Nugget", 0, 128),
+            ("Glowstone Dust", 0, 32), ("Ancient Debris", 0, 2)
         ],
         "end": [
-            ("End Stone", 192, 768)
+            ("End Stone", 64, 384)
         ]
     }
 
@@ -20,11 +20,11 @@ CHOP = {
             "taiga": {"weight": 20, "trees": ["spruce"]},
             "birch forest": {"weight": 10, "trees": ["birch"]},
             "dark forest": {"weight": 10, "trees": ["dark_oak"]},
-            "jungle": {"weight": 3, "trees": ["jungle"]},
-            "savanna": {"weight": 2, "trees": ["acacia"]},
+            "jungle": {"weight": 6, "trees": ["jungle"]},
+            "savanna": {"weight": 15, "trees": ["acacia"]},
             "mangrove swamp": {"weight": 7, "trees": ["mangrove"]},
             "cherry grove": {"weight": 10, "trees": ["cherry"]},
-            "pale garden": {"weight": 8, "trees": ["pale_oak"]}
+            "pale garden": {"weight": 3, "trees": ["pale_oak"]}
         },
         "tree_data": {
             "oak": {"drops": [("Oak Log", 12, 28), ("Oak Sapling", 1, 3), ("Apple", 0, 2), ("Stick", 1, 4)]},
@@ -570,3 +570,5 @@ ADVENTURE = {
         }
     }
 }
+
+MULTI_DISCOVERY_CHANCE = 0.15
