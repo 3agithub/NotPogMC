@@ -1,9 +1,11 @@
 import os
 import asyncio
+from random import randint
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 from pathlib import Path
+from configs import SPLASHES
 import aiosqlite
 
 env_path = Path(__file__).resolve().parent / '.env'
@@ -16,7 +18,7 @@ class Bot(commands.AutoShardedBot):
         super().__init__(
             command_prefix = "m!",
             intents = intents,
-            activity = discord.Activity(type=discord.ActivityType.listening, name="m!help"),
+            activity = discord.Activity(type=discord.ActivityType.listening, name=f"m!help | {SPLASHES[randint(0,len(SPLASHES)-1)]}"),
             status = discord.Status.do_not_disturb
         )
         self.db = None
