@@ -50,8 +50,8 @@ class Alias(commands.Cog):
         embed.set_footer(text=f"Shard #{ctx.guild.shard_id + 1}")
         await ctx.send(embed=embed)
 
-    @alias.command(aliases=["m"])
-    async def mine(self, ctx: commands.Context):
+    @alias.command(name="mine", aliases=["m"])
+    async def mine_alias(self, ctx: commands.Context):
         embed=discord.Embed(
             title="NotPogMC Command Aliases · m!mine",
             description="`m!mine` - `m!m`",
@@ -74,8 +74,8 @@ class Alias(commands.Cog):
         embed.set_footer(text=f"Shard #{ctx.guild.shard_id + 1}")
         await ctx.send(embed=embed)
 
-    @alias.command(aliases=["c"])
-    async def mine(self, ctx: commands.Context):
+    @alias.command(name="chop", aliases=["c"])
+    async def chop_alias(self, ctx: commands.Context):
         embed=discord.Embed(
             title="NotPogMC Command Aliases · m!chop",
             description="`m!chop` - `m!c`",
@@ -98,8 +98,8 @@ class Alias(commands.Cog):
         embed.set_footer(text=f"Shard #{ctx.guild.shard_id + 1}")
         await ctx.send(embed=embed)
     
-    @alias.command(aliases=["adv"])
-    async def mine(self, ctx: commands.Context):
+    @alias.command(name="adventure", aliases=["adv"])
+    async def adventure_alias(self, ctx: commands.Context):
         embed=discord.Embed(
             title="NotPogMC Command Aliases · m!adventure",
             description="`m!mine` - `m!adv`",
