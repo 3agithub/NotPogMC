@@ -3,58 +3,15 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 from random import randint
+from loot_tables import CHOP as LOOT_TABLES
+from cogs.inventory import save_player_loot
+from configs import CHOP_CD
 
-LOOT_TABLES = {
-    "overworld": {
-        "biomes": {
-            "forest": {"weight": 30, "trees": ["oak", "birch"]},
-            "taiga": {"weight": 20, "trees": ["spruce"]},
-            "birch forest": {"weight": 10, "trees": ["birch"]},
-            "dark forest": {"weight": 10, "trees": ["dark_oak"]},
-            "jungle": {"weight": 3, "trees": ["jungle"]},
-            "savanna": {"weight": 2, "trees": ["acacia"]},
-            "mangrove swamp": {"weight": 7, "trees": ["mangrove"]},
-            "cherry grove": {"weight": 10, "trees": ["cherry"]},
-            "pale garden": {"weight": 8, "trees": ["pale_oak"]}
-        },
-        "tree_data": {
-            "oak": {"drops": [("Oak Log", 12, 28), ("Oak Sapling", 1, 3), ("Apple", 0, 2), ("Stick", 1, 4)]},
-            "spruce": {"drops": [("Spruce Log", 16, 54), ("Spruce Sapling", 2, 5), ("Stick", 1, 5)]},
-            "birch": {"drops": [("Birch Log", 10, 16), ("Birch Sapling", 1, 2), ("Stick", 1, 3)]},
-            "dark_oak": {"drops": [("Dark Oak Log", 24, 48), ("Dark Oak Sapling", 2, 4), ("Apple", 0, 3), ("Stick", 2, 6)]},
-            "jungle": {"drops": [("Jungle Log", 15, 64), ("Jungle Sapling", 1, 3), ("Vines", 0, 4), ("Cocoa Beans", 0, 3)]},
-            "acacia": {"drops": [("Acacia Log", 8, 14), ("Acacia Sapling", 1, 2), ("Stick", 1, 3)]},
-            "cherry": {"drops": [("Cherry Log", 12, 24), ("Cherry Sapling", 1, 3), ("Pink Petals", 1, 4), ("Stick", 1, 3)]},
-            "pale_oak": {"drops": [("Pale Oak Log", 15, 36), ("Pale Oak Sapling", 1, 3), ("Pale Hanging Moss", 1, 4), ("Creaking Heart", 0, 1)]},
-            "mangrove": {"drops": [("Mangrove Log", 12, 32), ("Mangrove Propagule", 1, 3), ("Mangrove Roots", 4, 12), ("Muddy Mangrove Roots", 2, 6)]}
-        }
-    },
-    "nether": {
-        "biomes": {
-            "crimson forest": {"weight": 50, "trees": ["crimson"]},
-            "warped forest": {"weight": 50, "trees": ["warped"]}
-        },
-        "tree_data": {
-            "crimson": {"drops": [("Crimson Stem", 14, 32), ("Crimson Fungi", 1, 2), ("Shroomlight", 0, 2), ("Weeping Vines", 0, 3)]},
-            "warped": {"drops": [("Warped Stem", 14, 32), ("Warped Fungi", 1, 2), ("Shroomlight", 0, 2), ("Twisting Vines", 0, 3)]}
-        }
-    },
-    "end": {
-        "biomes": {
-            "end highlands": {"weight": 100, "trees": ["chorus_plant"]}
-        },
-        "tree_data": {
-            "chorus_plant": {"drops": [("Chorus Fruit", 10, 24), ("Chorus Flower", 1, 3)]}
-        }
-    }
-}
-
-def loot_num(min_val, max_val):
+def loot_num(min, max):
     res = randint(0, 1000)
-    final_amt = round(res / 1000 * (max_val - min_val) + min_val)
-    return [final_amt, res]
+    return [round(res / 1000 * (max - min) + min), res]
 
-def run_chop_action(dimension: str) -> dict:
+def run_chop_action(dimension) -> dict:
     dim_data = LOOT_TABLES.get(dimension.lower())
     if not dim_data:
         return {"error": "Invalid dimension specified."}
@@ -92,13 +49,47 @@ def run_chop_action(dimension: str) -> dict:
 class Chop(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
+        self.cd = CHOP_CD
+        self.cooldown = commands.CooldownMapping.from_cooldown(1, self.cd, commands.BucketType.user)
+
+    async def cog_before_invoke(self, ctx: commands.Context):
+        if ctx.command == self.chop: 
+            return
+
+        bucket = self.cooldown.get_bucket(ctx.message)
+        retry_after = bucket.update_rate_limit()
+        
+        if retry_after:
+            bucket._tokens = 0
+            remaining_time = round(retry_after, 1)
+            embed = discord.Embed(
+                title="Chopping Cooldown",
+                description=f"You are exhausted from your last chopping expedition! Please rest for another {remaining_time} seconds before swinging your axe again.",
+                color=discord.Color.red(),
+                timestamp=datetime.datetime.now(datetime.timezone.utc)
+            )
+            embed.set_author(name=ctx.author.name, icon_url=ctx.author.display_avatar.url)
+            embed.set_footer(text=f"Shard #{ctx.guild.shard_id + 1}")
+            
+            await ctx.send(embed=embed)
+            raise commands.CheckFailure("User is currently on an active chopping cooldown.")
+
+    async def cog_command_error(self, ctx: commands.Context, error: commands.CommandError):
+        if isinstance(error, commands.CommandInvokeError):
+            error = error.original
+        if isinstance(error, commands.CheckFailure):
+            return
+        raise error
 
     @commands.group(invoke_without_command=True, aliases=["c"])
     async def chop(self, ctx: commands.Context):
         embed = discord.Embed(
             title="Chopping",
-            description=f"Explore different dimensions and chop for resources!\nOverworld: `m!chop overworld`\nNether: `m!chop nether`\nEnd: `m!chop end`",
-            color=discord.Color(0x333333),
+            description=f"Explore different dimensions and chop for resources! ({self.cd}s cooldown)\n\
+                          Overworld: `m!chop overworld`\n\
+                          Nether: `m!chop nether`\n\
+                          End: `m!chop end`",
+            color=discord.Color(0x291804),
             timestamp=datetime.datetime.now(datetime.timezone.utc)
         )
         embed.set_author(name = ctx.author.name, icon_url = ctx.author.display_avatar.url)
@@ -110,6 +101,9 @@ class Chop(commands.Cog):
         result = run_chop_action("overworld")
         if "error" in result:
             return await ctx.send(result["error"])
+
+        if result.get("drops"):
+            await save_player_loot(self.bot.db, ctx.author.id, result["drops"])
 
         loot_lines = []
         for name, amt, roll_val in result["drops"]:
@@ -136,6 +130,9 @@ class Chop(commands.Cog):
         result = run_chop_action("nether")
         if "error" in result:
             return await ctx.send(result["error"])
+        
+        if result.get("drops"):
+            await save_player_loot(self.bot.db, ctx.author.id, result["drops"])
 
         loot_lines = []
         for name, amt, roll_val in result["drops"]:
@@ -162,6 +159,9 @@ class Chop(commands.Cog):
         result = run_chop_action("end")
         if "error" in result:
             return await ctx.send(result["error"])
+
+        if result.get("drops"):
+            await save_player_loot(self.bot.db, ctx.author.id, result["drops"])
 
         loot_lines = []
         for name, amt, roll_val in result["drops"]:

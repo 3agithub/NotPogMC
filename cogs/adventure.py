@@ -1,16 +1,18 @@
 import datetime
 import discord
+from discord import app_commands
 from discord.ext import commands
 import random
 from random import randint
+
 from loot_tables import ADVENTURE as LOOT_TABLES
+from loot_tables import MULTI_DISCOVERY_CHANCE
+from cogs.inventory import save_player_loot
+from configs import ADVENTURE_CD
 
-MULTI_DISCOVERY_CHANCE = 0.15
-
-def loot_num(min_val, max_val):
+def loot_num(min, max):
     res = randint(0, 1000)
-    final_amt = round(res / 1000 * (max_val - min_val) + min_val)
-    return [final_amt, res]
+    return [round(res / 1000 * (max - min) + min), res]
 
 def run_adventure_action(dimension: str, target_biome: str = None) -> dict:
     dim_data = LOOT_TABLES.get(dimension.lower())
@@ -68,7 +70,7 @@ def run_adventure_action(dimension: str, target_biome: str = None) -> dict:
             "structure": "none",
             "chests": 0,
             "drops": [],
-            "discovered": []
+            "discovered": list(set(discovered_names))
         }
 
     struct_config = dim_data["structures"][selected_structure]
@@ -77,7 +79,6 @@ def run_adventure_action(dimension: str, target_biome: str = None) -> dict:
     if struct_config.get("unique_chests", False):
         all_possible_chests = ["map", "supply", "treasure"]
         num_chests = randint(2, 3)
-        
         chests_to_raid = random.sample(all_possible_chests, k=num_chests)
         
         for chest_type in chests_to_raid:
@@ -93,7 +94,6 @@ def run_adventure_action(dimension: str, target_biome: str = None) -> dict:
                 for item_name, weight, min_amt, max_amt in selected_items:
                     if item_name is None:
                         continue
-                        
                     amount, roll_val = loot_num(min_amt, max_amt)
                     if amount > 0:
                         if item_name not in aggregated_drops:
@@ -104,13 +104,11 @@ def run_adventure_action(dimension: str, target_biome: str = None) -> dict:
     elif struct_config.get("use_pools", False):
         min_chests, max_chests = struct_config["chests"]
         num_chests = randint(min_chests, max_chests)
-        
         active_pools_to_roll = []
 
         if "bastion" in selected_structure:
             specific_registry_id = f"{selected_structure.replace(' ', '_')}_pools"
             generic_registry_id = "bastion_generic_pools"
-
             g_ratio = struct_config.get("generic_ratio", 1)
             s_ratio = struct_config.get("specific_ratio", 1)
             total_ratio_weight = g_ratio + s_ratio
@@ -121,7 +119,6 @@ def run_adventure_action(dimension: str, target_biome: str = None) -> dict:
             else:
                 g_chests = round((g_ratio / total_ratio_weight) * num_chests)
                 s_chests = num_chests - g_chests
-
                 if g_ratio == 0:
                     g_chests, s_chests = 0, num_chests
                 elif s_ratio == 0:
@@ -147,7 +144,6 @@ def run_adventure_action(dimension: str, target_biome: str = None) -> dict:
                 for item_name, weight, min_amt, max_amt in selected_items:
                     if item_name is None:
                         continue
-                        
                     amount, roll_val = loot_num(min_amt, max_amt)
                     if amount > 0:
                         if item_name not in aggregated_drops:
@@ -173,7 +169,6 @@ def run_adventure_action(dimension: str, target_biome: str = None) -> dict:
     if selected_structure == "end city":
         if random.random() < 0.05:
             num_chests += 2
-            
             active_pools = dim_data["loot_pools"]["end_city_pools"]
             for _ in range(2):
                 for pool in active_pools:
@@ -210,6 +205,7 @@ def run_adventure_action(dimension: str, target_biome: str = None) -> dict:
             selected_structure = "end city with an accompanying end ship"
 
     final_drops = []
+    final_drops = []
     for name, data in aggregated_drops.items():
         final_drops.append((name, data["amount"], data["rolls"][-1]))
 
@@ -224,18 +220,18 @@ def run_adventure_action(dimension: str, target_biome: str = None) -> dict:
 class Adventure(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
-        self.shared_cooldown = commands.CooldownMapping.from_cooldown(1, 60, commands.BucketType.user)
+        self.cd = ADVENTURE_CD
+        self.cooldown = commands.CooldownMapping.from_cooldown(1, self.cd, commands.BucketType.user)
 
     async def cog_before_invoke(self, ctx: commands.Context):
         if ctx.command == self.adventure: 
             return
 
-        bucket = self.shared_cooldown.get_bucket(ctx.message)
+        bucket = self.cooldown.get_bucket(ctx.message)
         retry_after = bucket.update_rate_limit()
         
         if retry_after:
             bucket._tokens = 0
-            
             remaining_time = round(retry_after, 1)
             embed = discord.Embed(
                 title="Adventure Cooldown",
@@ -247,13 +243,11 @@ class Adventure(commands.Cog):
             embed.set_footer(text=f"Shard #{ctx.guild.shard_id + 1}")
             
             await ctx.send(embed=embed)
-            
             raise commands.CheckFailure("User is currently on an active adventure cooldown.")
 
     async def cog_command_error(self, ctx: commands.Context, error: commands.CommandError):
         if isinstance(error, commands.CommandInvokeError):
             error = error.original
-
         if isinstance(error, commands.CheckFailure):
             return
         raise error
@@ -262,105 +256,113 @@ class Adventure(commands.Cog):
     async def adventure(self, ctx: commands.Context):
         embed = discord.Embed(
             title="Adventures",
-            description="Go on an adventure and explore different structures for precious loot!",
+            description=f"Go on an adventure and explore different structures for precious loot! ({self.cd}s cooldown)",
             color=discord.Color(0x333333),
             timestamp=datetime.datetime.now(datetime.timezone.utc)
         )
         embed.add_field(
             name="Dimensions",
-            value="`m!adventure overworld` - Explore the Overworld for its structures.\n"
-                  "`m!adventure nether` - Explore the Nether for its unique structures.\n"
-                  "`m!adventure end` - Explore the barren End for in hopes of finding treasure.\n\n"
+            value="- `m!adventure overworld` - Explore the Overworld for its structures.\n"
+                  "- `m!adventure nether` - Explore the Nether for its unique structures.\n"
+                  "- `m!adventure end` - Explore the barren End in hopes of finding treasure.\n\n"
                   "You can also specify biomes or structures to explore, as shown below.",
             inline=False
         )
         embed.add_field(
             name="Overworld Adventures",
-            value="`m!adventure desert` - Explore the desert biome for desert pyramids.\n"
-                  "`m!adventure jungle` - Explore the jungle biome for jungle pyramids.\n"
-                  "`m!adventure ocean` - Explore the vast oceans for shipwrecks.",
+            value="- `m!adventure desert` - Explore the desert biome.\n"
+                  "- `m!adventure jungle` - Explore the jungle biome.\n"
+                  "- `m!adventure ocean` - Explore the vast oceans.",
             inline=False
         )
         embed.add_field(
             name="Nether Adventures",
-            value="`m!adventure crimson` - Explore the crimson forest.\n"
-                  "`m!adventure warped` - Explore the warped forest.\n"
-                  "`m!adventure soulsand` - Explore the soul sand valley.\n"
-                  "`m!adventure basalt` - Explore the basalt deltas.",
-            inline=False
-        )
-        embed.add_field(
-            name="End Adventures",
-            value="`m!adventure endcity` - Explore mysterious end cities for loot.",
-            inline=False
-        )
-        embed.add_field(
-            name="Feedback",
-            value="Adventures are still in development. If you have suggestions, please join the support server.",
+            value="- `m!adventure netherwastes` - Explore the nether wastes.\n"
+                  "- `m!adventure crimson` - Explore the crimson forest.\n"
+                  "- `m!adventure warped` - Explore the warped forest.\n"
+                  "- `m!adventure soulsand` - Explore the soul sand valley.\n"
+                  "- `m!adventure basalt` - Explore the basalt deltas.",
             inline=False
         )
         embed.set_author(name=ctx.author.name, icon_url=ctx.author.display_avatar.url)
-        embed.set_footer(text=f"Adventures are a work in progress. · Shard #{ctx.guild.shard_id + 1}")
+        embed.set_footer(text=f"Shard #{ctx.guild.shard_id + 1}")
         await ctx.send(embed=embed)
 
     @adventure.command(aliases=["o", "ow"])
     async def overworld(self, ctx: commands.Context):
         result = run_adventure_action("overworld")
+        if "error" not in result and result["structure"] != "none": 
+            await save_player_loot(self.bot.db, ctx.author.id, result["drops"])
         await self._send_adventure_result(ctx, result, discord.Color(0x228b22))
 
-    @adventure.command(aliases=["desert", "d"])
-    async def desert_biome(self, ctx: commands.Context):
+    @adventure.command(aliases=["d"])
+    async def desert(self, ctx: commands.Context):
         result = run_adventure_action("overworld", "desert")
+        if "error" not in result and result["structure"] != "none": 
+            await save_player_loot(self.bot.db, ctx.author.id, result["drops"])
         await self._send_adventure_result(ctx, result, discord.Color(0xe4d96f))
 
-    @adventure.command(aliases=["jungle", "j"])
-    async def jungle_biome(self, ctx: commands.Context):
+    @adventure.command(aliases=["j"])
+    async def jungle(self, ctx: commands.Context):
         result = run_adventure_action("overworld", "jungle")
+        if "error" not in result and result["structure"] != "none": 
+            await save_player_loot(self.bot.db, ctx.author.id, result["drops"])
         await self._send_adventure_result(ctx, result, discord.Color(0x228b22))
 
-    @adventure.command(aliases=["ocean", "oc"])
-    async def ocean_biome(self, ctx: commands.Context):
+    @adventure.command(aliases=["oc"])
+    async def ocean(self, ctx: commands.Context):
         result = run_adventure_action("overworld", "ocean")
+        if "error" not in result and result["structure"] != "none":
+            await save_player_loot(self.bot.db, ctx.author.id, result["drops"])
         await self._send_adventure_result(ctx, result, discord.Color(0x008080))
 
     @adventure.command(aliases=["n"])
     async def nether(self, ctx: commands.Context):
         result = run_adventure_action("nether")
+        if "error" not in result and result["structure"] != "none": 
+            await save_player_loot(self.bot.db, ctx.author.id, result["drops"])
         await self._send_adventure_result(ctx, result, discord.Color(0xff4500))
 
     @adventure.command(aliases=["nw"])
     async def netherwastes(self, ctx: commands.Context):
         result = run_adventure_action("nether", "netherwastes")
+        if "error" not in result and result["structure"] != "none": 
+            await save_player_loot(self.bot.db, ctx.author.id, result["drops"])
         await self._send_adventure_result(ctx, result, discord.Color(0x8b0000))
 
     @adventure.command(aliases=["cf", "crimsonforest"])
     async def crimson(self, ctx: commands.Context):
         result = run_adventure_action("nether", "crimson")
+        if "error" not in result and result["structure"] != "none": 
+            await save_player_loot(self.bot.db, ctx.author.id, result["drops"])
         await self._send_adventure_result(ctx, result, discord.Color(0xb22222))
 
     @adventure.command(aliases=["wf", "warpedforest"])
     async def warped(self, ctx: commands.Context):
         result = run_adventure_action("nether", "warped")
+        if "error" not in result and result["structure"] != "none": 
+            await save_player_loot(self.bot.db, ctx.author.id, result["drops"])
         await self._send_adventure_result(ctx, result, discord.Color(0x008b8b))
 
     @adventure.command(aliases=["ss", "ssv", "soulsandvalley"])
     async def soulsand(self, ctx: commands.Context):
         result = run_adventure_action("nether", "soulsand")
+        if "error" not in result and result["structure"] != "none": 
+            await save_player_loot(self.bot.db, ctx.author.id, result["drops"])
         await self._send_adventure_result(ctx, result, discord.Color(0x4a3b32))
 
     @adventure.command(aliases=["bd", "basaltdeltas"])
     async def basalt(self, ctx: commands.Context):
         result = run_adventure_action("nether", "basalt")
+        if "error" not in result and result["structure"] != "none": 
+            await save_player_loot(self.bot.db, ctx.author.id, result["drops"])
         await self._send_adventure_result(ctx, result, discord.Color(0x696969))
 
     @adventure.command(aliases=["e"])
     async def end(self, ctx: commands.Context):
         result = run_adventure_action("end")
-        await self._send_adventure_result(ctx, result, discord.Color(0x9370db))
-
-    @adventure.command(aliases=["endcity", "ec"])
-    async def end_city(self, ctx: commands.Context):
-        result = run_adventure_action("end", "end city")
+        if "error" not in result and result["structure"] != "none": 
+            await save_player_loot(self.bot.db, ctx.author.id, result["drops"])
         await self._send_adventure_result(ctx, result, discord.Color(0x9370db))
 
     async def _send_adventure_result(self, ctx: commands.Context, result: dict, embed_color: discord.Color):
@@ -375,7 +377,7 @@ class Adventure(commands.Cog):
             else:
                 discovery_text += f"On your journey, you spotted signs of a {result['discovered'][0]}.\n\n"
         else:
-            discovery_text += "\n\n"
+            discovery_text += "\n"
 
         if result["structure"] == "none":
             adv_desc = (

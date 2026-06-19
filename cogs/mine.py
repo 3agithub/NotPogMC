@@ -4,21 +4,57 @@ from discord import app_commands
 from discord.ext import commands
 from random import randint
 from loot_tables import MINE as LOOT_TABLES
+from cogs.inventory import save_player_loot
+from configs import MINE_CD
 
 def loot_num(min, max):
     res = randint(0, 1000)
-    return [res / 1000 * (max - min) + min, res]
+    return [round(res / 1000 * (max - min) + min), res]
 
 class Mine(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
+        self.cd = MINE_CD
+        self.cooldown = commands.CooldownMapping.from_cooldown(1, self.cd, commands.BucketType.user)
+
+    async def cog_before_invoke(self, ctx: commands.Context):
+        if ctx.command == self.mine: 
+            return
+
+        bucket = self.cooldown.get_bucket(ctx.message)
+        retry_after = bucket.update_rate_limit()
+        
+        if retry_after:
+            bucket._tokens = 0
+            remaining_time = round(retry_after, 1)
+            embed = discord.Embed(
+                title="Mining Cooldown",
+                description=f"You are exhausted from your last mining expedition! Please rest for another {remaining_time} seconds before digging again.",
+                color=discord.Color.red(),
+                timestamp=datetime.datetime.now(datetime.timezone.utc)
+            )
+            embed.set_author(name=ctx.author.name, icon_url=ctx.author.display_avatar.url)
+            embed.set_footer(text=f"Shard #{ctx.guild.shard_id + 1}")
+            
+            await ctx.send(embed=embed)
+            raise commands.CheckFailure("User is currently on an active mining cooldown.")
+
+    async def cog_command_error(self, ctx: commands.Context, error: commands.CommandError):
+        if isinstance(error, commands.CommandInvokeError):
+            error = error.original
+        if isinstance(error, commands.CheckFailure):
+            return
+        raise error
 
     @commands.group(invoke_without_command=True, aliases=["m"])
     async def mine(self, ctx: commands.Context):
         embed = discord.Embed(
             title="Mining",
-            description=f"Explore different dimensions and mine for resources!\nOverworld: `m!mine overworld`\nNether: `m!mine nether`\nEnd: `m!mine end`",
-            color=discord.Color(0x333333),
+            description=f"Explore different dimensions and mine for resources! ({self.cd}s cooldown)\n\
+                          Overworld: `m!mine overworld`\n\
+                          Nether: `m!mine nether`\n\
+                          End: `m!mine end`",
+            color=discord.Color(0x4a4842),
             timestamp=datetime.datetime.now(datetime.timezone.utc)
         )
         embed.set_author(name = ctx.author.name, icon_url = ctx.author.display_avatar.url)
@@ -28,9 +64,16 @@ class Mine(commands.Cog):
     @mine.command(aliases=["o", "ow"])
     async def overworld(self, ctx: commands.Context):
         loot_lines = []
-        for name, min_val, max_val in self.LOOT_TABLES["overworld"]:
-            roll = loot_num(min_val, max_val)
-            loot_lines.append(f"- {name} ×{roll[0]:.0f} ({roll[1]})")
+        drops_to_save = []
+        
+        for name, min_val, max_val in LOOT_TABLES["overworld"]:
+            amount, roll_val = loot_num(min_val, max_val)
+            if amount > 0:
+                loot_lines.append(f"- {name} ×{amount} ({roll_val})")
+                drops_to_save.append((name, amount))
+
+        if drops_to_save:
+            await save_player_loot(self.bot.db, ctx.author.id, drops_to_save)
 
         ow_desc = (
             f"You venture into the Overworld, surrounded by lush forests and towering mountains. "
@@ -51,9 +94,16 @@ class Mine(commands.Cog):
     @mine.command(aliases=["n"])
     async def nether(self, ctx: commands.Context):
         loot_lines = []
-        for name, min_val, max_val in self.LOOT_TABLES["nether"]:
-            roll = loot_num(min_val, max_val)
-            loot_lines.append(f"- {name} ×{roll[0]:.0f} ({roll[1]})")
+        drops_to_save = []
+        
+        for name, min_val, max_val in LOOT_TABLES["nether"]:
+            amount, roll_val = loot_num(min_val, max_val)
+            if amount > 0:
+                loot_lines.append(f"- {name} ×{amount} ({roll_val})")
+                drops_to_save.append((name, amount))
+
+        if drops_to_save:
+            await save_player_loot(self.bot.db, ctx.author.id, drops_to_save)
 
         nether_desc = (
             f"You descend into the Nether, a hellish realm filled with lava, ghasts, and ancient structures."
@@ -74,9 +124,16 @@ class Mine(commands.Cog):
     @mine.command(aliases=["e"])
     async def end(self, ctx: commands.Context):
         loot_lines = []
-        for name, min_val, max_val in self.LOOT_TABLES["end"]:
-            roll = loot_num(min_val, max_val)
-            loot_lines.append(f"- {name} ×{roll[0]:.0f} ({roll[1]})")
+        drops_to_save = []
+        
+        for name, min_val, max_val in LOOT_TABLES["end"]:
+            amount, roll_val = loot_num(min_val, max_val)
+            if amount > 0:
+                loot_lines.append(f"- {name} ×{amount} ({roll_val})")
+                drops_to_save.append((name, amount))
+
+        if drops_to_save:
+            await save_player_loot(self.bot.db, ctx.author.id, drops_to_save)
 
         end_desc = (
             f"You travel to the End, a barren dimension filled with nothing more but end stone, chorus plants and end cities. "
