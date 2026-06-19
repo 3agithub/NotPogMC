@@ -2089,8 +2089,8 @@ CHOP = {
             "warped forest": {"weight": 50, "trees": ["warped"]}
         },
         "tree_data": {
-            "crimson": {"drops": [("Crimson Stem", 14, 32), ("Crimson Fungi", 1, 2), ("Shroomlight", 0, 2), ("Weeping Vines", 0, 3)]},
-            "warped": {"drops": [("Warped Stem", 14, 32), ("Warped Fungi", 1, 2), ("Shroomlight", 0, 2), ("Twisting Vines", 0, 3)]}
+            "crimson": {"drops": [("Crimson Stem", 14, 32), ("Crimson Fungus", 1, 2), ("Shroomlight", 2, 5), ("Weeping Vines", 1, 7)]},
+            "warped": {"drops": [("Warped Stem", 14, 32), ("Warped Fungus", 1, 2), ("Shroomlight", 2, 5), ("Twisting Vines", 1, 7)]}
         }
     },
     "end": {
