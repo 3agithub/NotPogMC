@@ -31,11 +31,6 @@ class Credits(commands.Cog):
             inline=False
         )
         embed.add_field(
-            name="Emotional Damage Team",
-            value="<@685342780175679489>",
-            inline=False
-        )
-        embed.add_field(
             name="You, the player",
             value="Without you, this bot would not be possible. Thank you for playing!",
             inline=False
