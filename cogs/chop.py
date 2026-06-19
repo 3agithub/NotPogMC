@@ -110,8 +110,7 @@ class Chop(commands.Cog):
             loot_lines.append(f"- {name} ×{amt} ({roll_val})")
 
         ow_desc = (
-            f"You venture into the Overworld, searching through a {result['biome']}. "
-            f"You chop for precious wood and resources while avoiding dangerous monsters lurking in the shadows.\n\n"
+            f"You venture into the Overworld, searching through a {result['biome']}.\n"
             f"You obtained:\n" + "\n".join(loot_lines)
         )
 
@@ -139,8 +138,7 @@ class Chop(commands.Cog):
             loot_lines.append(f"- {name} ×{amt} ({roll_val})")
 
         nether_desc = (
-            f"You step into the fiery Nether, arriving inside a dense {result['biome']}. "
-            f"You chop for valuable resources while trying to avoid getting burned alive.\n\n"
+            f"You step into the fiery Nether, arriving inside a dense {result['biome']}.\n"
             f"You obtained:\n" + "\n".join(loot_lines)
         )
 
@@ -168,13 +166,12 @@ class Chop(commands.Cog):
             loot_lines.append(f"- {name} ×{amt} ({roll_val})")
 
         end_desc = (
-            f"You rift into the cold void of the End and travel out to the {result['biome']}. "
-            f"You harvest exotic stalks while monitoring your step over the endless starry abyss.\n\n"
+            f"You rift into the cold void of the End and travel out to the {result['biome']}.\n"
             f"You obtained:\n" + "\n".join(loot_lines)
         )
 
         embed = discord.Embed(
-            title="End Chopping",
+            title="End Harvesting",
             description=end_desc,
             color=discord.Color(0x9370db),
             timestamp=datetime.datetime.now(datetime.timezone.utc)

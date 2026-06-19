@@ -76,8 +76,7 @@ class Mine(commands.Cog):
             await save_player_loot(self.bot.db, ctx.author.id, drops_to_save)
 
         ow_desc = (
-            f"You venture into the Overworld, surrounded by lush forests and towering mountains. "
-            f"You mine for precious minerals, while avoiding dangerous monsters lurking in the shadows.\n\n"
+            f"You venture into the Overworld, surrounded by lush forests and towering mountains.\n"
             f"You obtained:\n" + "\n".join(loot_lines)
         )
 
@@ -106,8 +105,7 @@ class Mine(commands.Cog):
             await save_player_loot(self.bot.db, ctx.author.id, drops_to_save)
 
         nether_desc = (
-            f"You descend into the Nether, a hellish realm filled with lava, ghasts, and ancient structures."
-            f"You mine for nether quartz and ancient debris, but beware of the dangers that lurk within its biomes.\n\n"
+            f"You descend into the Nether, filled with lava, hot biomes and ancient structures.\n"
             f"You obtained:\n" + "\n".join(loot_lines)
         )
 
@@ -136,8 +134,7 @@ class Mine(commands.Cog):
             await save_player_loot(self.bot.db, ctx.author.id, drops_to_save)
 
         end_desc = (
-            f"You travel to the End, a barren dimension filled with nothing more but end stone, chorus plants and end cities. "
-            f"You mine for the lone resources available here, but be careful not to fall into the void.\n\n"
+            f"You travel to the End, filled with nothing more but end stone, chorus plants and end cities.\n\n"
             f"You obtained:\n" + "\n".join(loot_lines)
         )
 
