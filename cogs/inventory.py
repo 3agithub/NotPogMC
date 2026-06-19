@@ -318,6 +318,31 @@ class Inventory(commands.Cog):
         message = await ctx.send(embed=initial_embed, view=view)
         view.message = message
 
+    @commands.command()
+    @commands.is_owner()
+    async def move_item_ids(self, ctx: commands.Context, old_id: int, new_id: int):
+        if not hasattr(self.bot, 'db') or self.bot.db is None:
+            return await ctx.send("Database connection is not ready.")
+
+        async with self.bot.db.cursor() as cursor:
+            await cursor.execute("SELECT user_id, quantity FROM Inventory WHERE item_id = ?", (old_id,))
+            rows = await cursor.fetchall()
+            
+            if not rows:
+                return await ctx.send(f"No player records found containing Item ID `{old_id}`.")
+
+            for user_id, quantity in rows:
+                await cursor.execute("""
+                    INSERT INTO Inventory (user_id, item_id, quantity)
+                    VALUES (?, ?, ?)
+                    ON CONFLICT(user_id, item_id) 
+                    DO UPDATE SET quantity = quantity + excluded.quantity
+                """, (user_id, new_id, quantity))
+
+            await cursor.execute("DELETE FROM Inventory WHERE item_id = ?", (old_id,))
+            await self.bot.db.commit()
+
+        await ctx.send(f"Successfully migrated `{old_id}` to `{new_id}` across {len(rows)} user profiles.")
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Inventory(bot))
