@@ -22,7 +22,7 @@ class Credits(commands.Cog):
         )
         embed.add_field(
             name="Developer Team",
-            value="<@554984391219347456>",
+            value="<@554984391219347456> · <@628917190724288512>",
             inline=False)
         embed.add_field(
             name="Credits for NotPogMC (2022-2023 version)",
