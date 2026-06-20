@@ -72,7 +72,7 @@ class Mine(commands.Cog):
             amount, roll_val = loot_num(min_val, max_val)
             if amount > 0:
                 item_name = ITEM_REGISTRY.get(item_id, f"Unknown (ID: {item_id})")
-                loot_lines.append(f"- {item_name} ×{amount} ({roll_val})")
+                loot_lines.append(f"- {item_name} ×{amount}")
                 drops_to_save.append((item_id, amount))
 
 
@@ -103,7 +103,7 @@ class Mine(commands.Cog):
             amount, roll_val = loot_num(min_val, max_val)
             if amount > 0:
                 item_name = ITEM_REGISTRY.get(item_id, f"Unknown (ID: {item_id})")
-                loot_lines.append(f"- {item_name} ×{amount} ({roll_val})")
+                loot_lines.append(f"- {item_name} ×{amount}")
                 drops_to_save.append((item_id, amount))
 
         if drops_to_save:
@@ -130,7 +130,7 @@ class Mine(commands.Cog):
         drops_to_save = []
         
         for item_id, min_val, max_val in LOOT_TABLES["end"]:
-            amount = loot_num(min_val, max_val)
+            amount, roll_val = loot_num(min_val, max_val)
             if amount > 0:
                 item_name = ITEM_REGISTRY.get(item_id, f"Unknown (ID: {item_id})")
                 loot_lines.append(f"- {item_name} ×{amount}")

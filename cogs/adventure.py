@@ -275,7 +275,7 @@ class Adventure(commands.Cog):
             )
         else:
             loot_lines = []
-            for item_id, amt in result["drops"]:
+            for item_id, amt, roll_val in result["drops"]:
                 item_name = ITEM_REGISTRY.get(item_id, f"Unknown (ID: {item_id})")
                 loot_lines.append(f"- {item_name} x{amt}")
 
@@ -284,7 +284,7 @@ class Adventure(commands.Cog):
             adv_desc = (
                 f"{discovery_text}"
                 f"You {action_phrase} the {result['structure']} for your adventure!\n\n"
-                f"You obtained:-\n" + "\n".join(loot_lines) +
+                f"You obtained:\n" + "\n".join(loot_lines) +
                 f"\n\nNumber of Chests: {result['chests']}"
             )
 
