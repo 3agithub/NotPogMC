@@ -15,7 +15,7 @@ class Splash(commands.Cog):
     @tasks.loop(seconds=SPLASH_INTERVAL)
     async def splash_status(self):
         if self.old_splash and len(SPLASHES) > 1:
-            available_choices = [s for s in SPLASHES if s != self.old_splash]
+            available_choices = [s for s in SPLASHES if s != self.old_splash and s != SPLASHES[222]]
             splash = random.choice(available_choices)
         else: splash = random.choice(SPLASHES)
         
