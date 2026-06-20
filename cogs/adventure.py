@@ -275,9 +275,9 @@ class Adventure(commands.Cog):
             )
         else:
             loot_lines = []
-            for item_id, amt, roll_val in result["drops"]:
+            for item_id, amt in result["drops"]:
                 item_name = ITEM_REGISTRY.get(item_id, f"Unknown (ID: {item_id})")
-                loot_lines.append(f"- {item_name} x{amt} ({roll_val})")
+                loot_lines.append(f"- {item_name} x{amt}")
 
             action_phrase = "decided to advance into" if len(result["discovered"]) > 1 else "ventured out to"
             

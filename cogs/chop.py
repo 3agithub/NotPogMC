@@ -109,9 +109,9 @@ class Chop(commands.Cog):
             await save_player_loot(self.bot.db, ctx.author.id, drops_to_save)
 
         loot_lines = []
-        for item_id, amt, roll_val in result["drops"]:
+        for item_id, amt in result["drops"]:
             item_name = ITEM_REGISTRY.get(item_id, f"Unknown (ID: {item_id})")
-            loot_lines.append(f"- {item_name} ×{amt} ({roll_val})")
+            loot_lines.append(f"- {item_name} ×{amt}")
 
         ow_desc = (
             f"You venture into the Overworld, searching through a {result['biome']}.\n"
