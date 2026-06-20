@@ -3,7 +3,8 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 from random import randint
-from loot_tables import ITEM_REGISTRY, CHOP as LOOT_TABLES
+from items import ITEM_REGISTRY
+from loot_tables import CHOP as LOOT_TABLES
 from cogs.inventory import save_player_loot
 from configs import CHOP_CD
 

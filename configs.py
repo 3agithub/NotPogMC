@@ -3,6 +3,9 @@ MINE_CD = 20
 CHOP_CD = 15
 ADVENTURE_CD = 60
 
+# adventuring
+MULTI_DISCOVERY_CHANCE = 0.15
+
 # splashes for bot status
 SPLASHES = [
     "As seen on TV!",

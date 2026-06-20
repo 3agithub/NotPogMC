@@ -5,7 +5,7 @@ from discord import app_commands
 from discord.ext import commands
 import aiosqlite
 import bisect
-from loot_tables import ITEM_REGISTRY
+from items import ITEM_REGISTRY
 from configs import STACK_SIZE
 
 async def save_player_loot(db_connection: aiosqlite.Connection, user_id: int, drops: list):

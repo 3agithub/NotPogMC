@@ -5,10 +5,10 @@ from discord.ext import commands
 import random
 from random import randint
 
-from loot_tables import ITEM_REGISTRY, ADVENTURE as LOOT_TABLES
-from loot_tables import MULTI_DISCOVERY_CHANCE
+from items import ITEM_REGISTRY
+from loot_tables import ADVENTURE as LOOT_TABLES
+from configs import MULTI_DISCOVERY_CHANCE, ADVENTURE_CD
 from cogs.inventory import save_player_loot
-from configs import ADVENTURE_CD
 
 def loot_num(min, max):
     res = randint(0, 1000)
