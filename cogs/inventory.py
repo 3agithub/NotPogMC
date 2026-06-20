@@ -11,20 +11,9 @@ async def save_player_loot(db_connection: aiosqlite.Connection, user_id: int, dr
     if not drops:
         return
 
-    safe_name_to_id = {
-        name: item_id for item_id, name in ITEM_REGISTRY.items() 
-        if not str(item_id).endswith('00') or item_id == 0
-    }
-
     async with db_connection.cursor() as cursor:
-        for item_data in drops:
-            item_name = item_data[0]
-            quantity = item_data[1]
-            
-            item_id = safe_name_to_id.get(item_name)
-            
+        for item_id, quantity in drops:
             if item_id is None:
-                print(f"Warning: Attempted to save unregistered item '{item_name}'")
                 continue
                 
             await cursor.execute("""

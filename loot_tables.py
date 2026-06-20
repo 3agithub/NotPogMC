@@ -748,6 +748,8 @@ ITEM_REGISTRY = { # multiple of 100 = category (see google sheets file)
     6507: 'Mangrove Propagule',
     6508: 'Azalea',
     6509: 'Flowering Azalea',
+    6510: 'Cherry Sapling',
+    6511: 'Pale Oak Sapling',
     6600: 'Nether Fungi',
     6601: 'Crimson Fungus',
     6602: 'Warped Fungus',
@@ -814,18 +816,18 @@ ITEM_REGISTRY = { # multiple of 100 = category (see google sheets file)
     7400: 'Farming',
     7401: 'Wheat Seeds',
     7402: 'Hay Bales',
-    7402: 'Cocoa Beans',
-    7403: 'Pumpkin Seeds',
-    7404: 'Pumpkin',
-    7405: 'Carved Pumpkin',
-    7406: 'Jack o\'Lantern',
-    7407: 'Melon Seeds',
-    7408: 'Melon',
-    7409: 'Beetroot Seeds',
-    7410: 'Glow Berries',
-    7411: 'Sweet Berries',
-    7412: 'Nether Wart',
-    7413: 'Dried Kelp Block',
+    7403: 'Cocoa Beans',
+    7404: 'Pumpkin Seeds',
+    7405: 'Pumpkin',
+    7406: 'Carved Pumpkin',
+    7407: 'Jack o\'Lantern',
+    7408: 'Melon Seeds',
+    7409: 'Melon',
+    7410: 'Beetroot Seeds',
+    7411: 'Glow Berries',
+    7412: 'Sweet Berries',
+    7413: 'Nether Wart',
+    7414: 'Dried Kelp Block',
     7500: 'Underwater',
     7501: 'Lily Pad',
     7502: 'Seagrass',
@@ -1188,7 +1190,7 @@ ITEM_REGISTRY = { # multiple of 100 = category (see google sheets file)
     14201: 'Wooden Sword',
     14202: 'Stone Sword',
     14203: 'Iron Sword',
-    14204: 'Gold Sword',
+    14204: 'Golden Sword',
     14205: 'Diamond Sword',
     14206: 'Netherite Sword',
     14207: 'Copper Sword',
@@ -1597,7 +1599,7 @@ ITEM_REGISTRY = { # multiple of 100 = category (see google sheets file)
     18709: 'Field Masoned Banner Pattern',
     18720: 'Bordure Indented Banner Pattern',
     18800: 'Enchantments + Enchantment Books (Part 1)',
-    18801: 'Bottle o’Enchanting',
+    18801: 'Bottle o\' Enchanting',
     18802: 'Enchanted Book (Protection I)',
     18803: 'Enchanted Book (Protection II)',
     18804: 'Enchanted Book (Protection III)',
@@ -2055,16 +2057,16 @@ NAME_TO_ID = {name: item_id for item_id, name in ITEM_REGISTRY.items() if not st
 
 MINE = {
         "overworld": [
-            ("Cobblestone", 128, 512), ("Coal", 0, 60), ("Raw Iron", 0, 16),
-            ("Raw Copper", 0, 32), ("Raw Gold", 0, 8), ("Redstone Dust", 0, 24),
-            ("Lapis Lazuli", 0, 12), ("Diamond", 0, 4), ("Emerald", 0, 2)
+            (1101, 128, 512), (17201, 0, 60), (17401, 0, 16),
+            (17402, 0, 32), (17403, 0, 8), (10901, 0, 24),
+            (17203, 0, 12), (17204, 0, 4), (17202, 0, 2)
         ],
         "nether": [
-            ("Netherrack", 192, 576), ("Nether Quartz", 0, 96), ("Gold Nugget", 0, 128),
-            ("Glowstone Dust", 0, 32), ("Ancient Debris", 0, 2)
+            (2601, 192, 576), (17301, 0, 96), (17502, 0, 128),
+            (18602, 0, 32), (5803, 0, 2)
         ],
         "end": [
-            ("End Stone", 64, 384)
+            (2901, 64, 384)
         ]
     }
 
@@ -2082,15 +2084,15 @@ CHOP = {
             "pale garden": {"weight": 3, "trees": ["pale_oak"]}
         },
         "tree_data": {
-            "oak": {"drops": [("Oak Log", 12, 28), ("Oak Sapling", 1, 3), ("Apple", 0, 2), ("Stick", 1, 4)]},
-            "spruce": {"drops": [("Spruce Log", 16, 54), ("Spruce Sapling", 2, 5), ("Stick", 1, 5)]},
-            "birch": {"drops": [("Birch Log", 10, 16), ("Birch Sapling", 1, 2), ("Stick", 1, 3)]},
-            "dark_oak": {"drops": [("Dark Oak Log", 24, 48), ("Dark Oak Sapling", 2, 4), ("Apple", 0, 3), ("Stick", 2, 6)]},
-            "jungle": {"drops": [("Jungle Log", 15, 64), ("Jungle Sapling", 1, 3), ("Vines", 0, 4), ("Cocoa Beans", 0, 3)]},
-            "acacia": {"drops": [("Acacia Log", 8, 14), ("Acacia Sapling", 1, 2), ("Stick", 1, 3)]},
-            "cherry": {"drops": [("Cherry Log", 12, 24), ("Cherry Sapling", 1, 3), ("Pink Petals", 1, 4), ("Stick", 1, 3)]},
-            "pale_oak": {"drops": [("Pale Oak Log", 15, 36), ("Pale Oak Sapling", 1, 3), ("Pale Hanging Moss", 1, 4), ("Creaking Heart", 0, 1)]},
-            "mangrove": {"drops": [("Mangrove Log", 12, 32), ("Mangrove Propagule", 1, 3), ("Mangrove Roots", 4, 12), ("Muddy Mangrove Roots", 2, 6)]}
+            "oak": {"drops": [(101, 12, 28), (6501, 1, 3), (15701, 0, 2), (17601, 1, 4)]},
+            "spruce": {"drops": [(201, 16, 54), (6502, 2, 5), (17601, 1, 5)]},
+            "birch": {"drops": [(301, 10, 16), (6503, 1, 2), (17601, 1, 3)]},
+            "dark_oak": {"drops": [(601, 24, 48), (6506, 2, 4), (15701, 0, 3), (17601, 2, 6)]},
+            "jungle": {"drops": [(401, 15, 64), (6504, 1, 3), (6904, 0, 4), (7403, 0, 3)]},
+            "acacia": {"drops": [(501, 8, 14), (6506, 1, 2), (17601, 1, 3)]},
+            "cherry": {"drops": [(19301, 12, 24), (6510, 1, 3), (6819, 1, 4), (17601, 1, 3)]},
+            "pale_oak": {"drops": [(20001, 15, 36), (6511, 1, 3), (20103, 1, 4), (20104, 0, 1)]},
+            "mangrove": {"drops": [(701, 12, 32), (6507, 1, 3), (6208, 4, 12), (6209, 2, 6)]}
         }
     },
     "nether": {
@@ -2099,8 +2101,8 @@ CHOP = {
             "warped forest": {"weight": 50, "trees": ["warped"]}
         },
         "tree_data": {
-            "crimson": {"drops": [("Crimson Stem", 14, 32), ("Crimson Fungus", 1, 2), ("Shroomlight", 2, 5), ("Weeping Vines", 1, 7)]},
-            "warped": {"drops": [("Warped Stem", 14, 32), ("Warped Fungus", 1, 2), ("Shroomlight", 2, 5), ("Twisting Vines", 1, 7)]}
+            "crimson": {"drops": [(801, 14, 32), (6601, 1, 2), (6405, 2, 5), (7004, 1, 7)]},
+            "warped": {"drops": [(901, 14, 32), (6602, 1, 2), (6405, 2, 5), (7005, 1, 7)]}
         }
     },
     "end": {
@@ -2108,7 +2110,7 @@ CHOP = {
             "end highlands": {"weight": 100, "trees": ["chorus_plant"]}
         },
         "tree_data": {
-            "chorus_plant": {"drops": [("Chorus Fruit", 10, 24), ("Chorus Flower", 1, 3)]}
+            "chorus_plant": {"drops": [(15705, 10, 24), (7102, 1, 3)]}
         }
     }
 }
@@ -2132,38 +2134,38 @@ ADVENTURE = {
                     "min_rolls": 2, "max_rolls": 4,
                     "items": [
                         (None, 15, 1, 1),
-                        ("Bone", 25, 4, 6),
-                        ("Rotten Flesh", 25, 3, 7),
-                        ("Spider Eye", 25, 1, 3),
-                        ("Leather", 20, 1, 5),
+                        (17701, 25, 4, 6),
+                        (16501, 25, 3, 7),
+                        (16502, 25, 1, 3),
+                        (17703, 20, 1, 5),
                         #("Enchanted Book", 20, 1, 1),
-                        ("Golden Apple", 20, 1, 1),
-                        ("Gold Ingot", 15, 2, 7),
-                        ("Iron Ingot", 15, 1, 5),
-                        ("Emerald", 15, 1, 3),
-                        ("Copper Horse Armor", 15, 1, 1),
-                        ("Iron Horse Armor", 15, 1, 1),
-                        ("Golden Horse Armor", 10, 1, 1),
-                        ("Diamond", 5, 1, 3),
-                        ("Diamond Horse Armor", 5, 1, 1),
-                        ("Enchanted Golden Apple", 2, 1, 1)
+                        (15702, 20, 1, 1),
+                        (17208, 15, 2, 7),
+                        (17206, 15, 1, 5),
+                        (17202, 15, 1, 3),
+                        (15206, 15, 1, 1),
+                        (15202, 15, 1, 1),
+                        (15203, 10, 1, 1),
+                        (17204, 5, 1, 3),
+                        (15204, 5, 1, 1),
+                        (15703, 2, 1, 1)
                     ]
                 },
                 {
                     "min_rolls": 4, "max_rolls": 4,
                     "items": [
-                        ("Bone", 10, 1, 8),
-                        ("Rotten Flesh", 10, 1, 8),
-                        ("Gunpowder", 10, 1, 8),
-                        ("Sand", 10, 1, 8),
-                        ("String", 10, 1, 8)
+                        (17701, 10, 1, 8),
+                        (16501, 10, 1, 8),
+                        (18603, 10, 1, 8),
+                        (5101, 10, 1, 8),
+                        (11502, 10, 1, 8)
                     ]
                 },
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
                         (None, 6, 1, 1),
-                        ("Dune Armor Trim Smithing Template", 1, 1, 1)
+                        (19503, 1, 1, 1)
                     ]
                 }
             ],
@@ -2171,26 +2173,26 @@ ADVENTURE = {
                 {
                     "min_rolls": 2, "max_rolls": 6,
                     "items": [
-                        ("Bone", 20, 4, 6),
-                        ("Rotten Flesh", 16, 3, 7),
-                        ("Gold Ingot", 15, 2, 7),
-                        ("Bamboo", 15, 1, 3),
-                        ("Iron Ingot", 10, 1, 5),
-                        ("Leather", 3, 1, 5),
-                        ("Diamond", 3, 1, 3),
-                        ("Emerald", 2, 1, 3),
-                        ("Copper Horse Armor", 1, 1, 1),
+                        (17701, 20, 4, 6),
+                        (16501, 16, 3, 7),
+                        (17208, 15, 2, 7),
+                        (6901, 15, 1, 3),
+                        (17206, 10, 1, 5),
+                        (17703, 3, 1, 5),
+                        (17204, 3, 1, 3),
+                        (17202, 2, 1, 3),
+                        (15206, 1, 1, 1),
                         #("Enchanted Book", 1, 1, 1),
-                        ("Iron Horse Armor", 1, 1, 1),
-                        ("Golden Horse Armor", 1, 1, 1),
-                        ("Diamond Horse Armor", 1, 1, 1)
+                        (15202, 1, 1, 1),
+                        (15203, 1, 1, 1),
+                        (15204, 1, 1, 1)
                     ]
                 },
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
                         (None, 2, 1, 1),
-                        ("Wild Armor Trim Smithing Template", 1, 1, 1)
+                        (19513, 1, 1, 1)
                     ]
                 }
             ],
@@ -2198,40 +2200,40 @@ ADVENTURE = {
                 {
                     "min_rolls": 3, "max_rolls": 10,
                     "items": [
-                        ("Suspicious Stew", 10, 1, 1),
-                        ("Paper", 8, 1, 12),
-                        ("Wheat", 7, 8, 21),
-                        ("Carrot", 7, 4, 8),
-                        ("Poisonous Potato", 7, 2, 6),
-                        ("Potato", 7, 2, 6),
-                        ("Moss Block", 7, 1, 4),
-                        ("Coal", 6, 2, 8),
-                        ("Rotten Flesh", 5, 5, 24),
-                        ("Gunpowder", 3, 1, 5),
-                        ("Leather Cap", 3, 1, 1), # enchanted
-                        ("Leather Tunic", 3, 1, 1), # enchanted
-                        ("Leather Pants", 3, 1, 1), # enchanted
-                        ("Leather Boots", 3, 1, 1), # enchanted
-                        ("Bamboo", 2, 1, 3),
-                        ("Pumpkin", 2, 1, 3),
-                        ("TNT", 1, 1, 2)
+                        #("Suspicious Stew", 10, 1, 1),
+                        (18401, 8, 1, 12),
+                        (17603, 7, 8, 21),
+                        (15801, 7, 4, 8),
+                        (15805, 7, 2, 6),
+                        (15803, 7, 2, 6),
+                        (5301, 7, 1, 4),
+                        (17201, 6, 2, 8),
+                        (16501, 5, 5, 24),
+                        (18603, 3, 1, 5),
+                        (14501, 3, 1, 1), # enchanted
+                        (14502, 3, 1, 1), # enchanted
+                        (14503, 3, 1, 1), # enchanted
+                        (14504, 3, 1, 1), # enchanted
+                        (6901, 2, 1, 3),
+                        (7405, 2, 1, 3),
+                        (11401, 1, 1, 2)
                     ]
                 },
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
                         (None, 5, 1, 1),
-                        ("Coast Armor Trim Smithing Template", 1, 1, 1)
+                        (19502, 1, 1, 1)
                     ]
                 },
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
                         (None, 148, 1, 1),
-                        ("Copper Nautilus Armor", 20, 1, 1),
-                        ("Iron Nautilus Armor", 10, 1, 1),
-                        ("Golden Nautilus Armor", 5, 1, 1),
-                        ("Diamond Nautilus Armor", 2, 1, 1)
+                        (15208, 20, 1, 1),
+                        (15209, 10, 1, 1),
+                        (15210, 5, 1, 1),
+                        (15211, 2, 1, 1)
                     ]
                 }
             ],
@@ -2239,36 +2241,36 @@ ADVENTURE = {
                 {
                     "min_rolls": 3, "max_rolls": 6,
                     "items": [
-                        ("Iron Ingot", 90, 1, 5),
-                        ("Emerald", 40, 1, 5),
-                        ("Gold Ingot", 10, 1, 5),
-                        ("Bottle o' Enchanting", 5, 1, 1),
-                        ("Diamond", 5, 1, 1)
+                        (17206, 90, 1, 5),
+                        (17202, 40, 1, 5),
+                        (17208, 10, 1, 5),
+                        (18801, 5, 1, 1),
+                        (17204, 5, 1, 1)
                     ]
                 },
                 {
                     "min_rolls": 2, "max_rolls": 5,
                     "items": [
-                        ("Iron Nugget", 50, 1, 10),
-                        ("Lapis Lazuli", 20, 1, 10),
-                        ("Gold Nugget", 10, 1, 10)
+                        (17501, 50, 1, 10),
+                        (17203, 20, 1, 10),
+                        (17502, 10, 1, 10)
                     ]
                 },
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
                         (None, 5, 1, 1),
-                        ("Coast Armor Trim Smithing Template", 1, 1, 1)
+                        (19502, 1, 1, 1)
                     ]
                 },
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
                         (None, 148, 1, 1),
-                        ("Copper Nautilus Armor", 20, 1, 1),
-                        ("Iron Nautilus Armor", 10, 1, 1),
-                        ("Golden Nautilus Armor", 5, 1, 1),
-                        ("Diamond Nautilus Armor", 2, 1, 1)
+                        (15208, 20, 1, 1),
+                        (15209, 10, 1, 1),
+                        (15210, 5, 1, 1),
+                        (15211, 2, 1, 1)
                     ]
                 }
             ],
@@ -2276,35 +2278,35 @@ ADVENTURE = {
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
-                        ("Map", 1, 1, 1) # buried treasure map
+                        (13302, 1, 1, 1) # buried treasure map
                     ]
                 },
                 {
                     "min_rolls": 3, "max_rolls": 3,
                     "items": [
-                        ("Paper", 20, 1, 10),
-                        ("Feather", 10, 1, 5),
-                        ("Book", 5, 1, 5),
-                        ("Clock", 1, 1, 1),
-                        ("Compass", 1, 1, 1),
-                        ("Empty Map", 1, 1, 1)
+                        (18401, 20, 1, 10),
+                        (17702, 10, 1, 5),
+                        (18402, 5, 1, 5),
+                        (13201, 1, 1, 1),
+                        (13101, 1, 1, 1),
+                        (13302, 1, 1, 1) # empty
                     ]
                 },
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
                         (None, 5, 1, 1),
-                        ("Coast Armor Trim Smithing Template", 1, 1, 1)
+                        (19502, 1, 1, 1)
                     ]
                 },
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
                         (None, 148, 1, 1),
-                        ("Copper Nautilus Armor", 20, 1, 1),
-                        ("Iron Nautilus Armor", 10, 1, 1),
-                        ("Golden Nautilus Armor", 5, 1, 1),
-                        ("Diamond Nautilus Armor", 2, 1, 1)
+                        (15208, 20, 1, 1),
+                        (15209, 10, 1, 1),
+                        (15210, 5, 1, 1),
+                        (15211, 2, 1, 1)
                     ]
                 }
             ]
@@ -2332,65 +2334,65 @@ ADVENTURE = {
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
-                        ("Golden Carrot", 12, 6, 17),
-                        ("Ancient Debris", 12, 1, 1),
-                        ("Spectral Arrow", 10, 10, 22),
+                        (15802, 12, 6, 17),
+                        (5803, 12, 1, 1),
+                        (15602, 10, 10, 22),
                         #("Enchanted Book", 10, 1, 1),
-                        ("Snout Banner Pattern", 9, 1, 1),
-                        ("Golden Apple", 9, 1, 1),
-                        ("Crossbow", 6, 1, 1), # damaged / enchanted
-                        ("Diamond Shovel", 6, 1, 1),
-                        ("Diamond Pickaxe", 6, 1, 1), # enchanted
-                        ("Music Disc (Pigstep)", 5, 1, 1),
-                        ("Netherite Scrap", 4, 1, 1)
+                        (18706, 9, 1, 1),
+                        (15702, 9, 1, 1),
+                        (15502, 6, 1, 1), # damaged / enchanted
+                        (12001, 6, 1, 1),
+                        (12002, 6, 1, 1), # enchanted
+                        (14101, 5, 1, 1),
+                        (17404, 4, 1, 1)
                     ]
                 },
                 {
                     "min_rolls": 2, "max_rolls": 2,
                     "items": [
-                        ("Iron Ingot", 2, 1, 6),
-                        ("Gold Ingot", 2, 1, 6),
-                        ("Crying Obsidian", 2, 1, 5),
-                        ("Block of Iron", 2, 1, 1),
-                        ("Iron Sword", 2, 1, 1), # damaged / enchanted
-                        ("Block of Gold", 2, 1, 1),
-                        ("Crossbow", 1, 1, 1),
-                        ("Golden Sword", 1, 1, 1),
-                        ("Golden Axe", 1, 1, 1), # enchanted
-                        ("Golden Helmet", 1, 1, 1),
-                        ("Golden Chestplate", 1, 1, 1),
-                        ("Golden Leggings", 1, 1, 1),
-                        ("Golden Boots", 1, 1, 1),
-                        ("Golden Boots", 1, 1, 1) # enchanted w/ soul speed
+                        (17206, 2, 1, 6),
+                        (17208, 2, 1, 6),
+                        (5402, 2, 1, 5),
+                        (3102, 2, 1, 1),
+                        (14203, 2, 1, 1), # damaged / enchanted
+                        (3103, 2, 1, 1),
+                        (15502, 1, 1, 1),
+                        (14204, 1, 1, 1),
+                        (11903, 1, 1, 1), # enchanted
+                        (14801, 1, 1, 1),
+                        (14802, 1, 1, 1),
+                        (14803, 1, 1, 1),
+                        (14804, 1, 1, 1),
+                        (14804, 1, 1, 1) # enchanted w/ soul speed
                     ]
                 },
                 {
                     "min_rolls": 3, "max_rolls": 4,
                     "items": [
-                        ("Arrow", 2, 5, 17),
-                        ("Magma Cream", 2, 2, 6),
-                        ("Gilded Blackstone", 2, 1, 5),
-                        ("Iron Chain", 1, 2, 10),
-                        ("Obsidian", 1, 4, 6),
-                        ("String", 1, 4, 6),
-                        ("Iron Nugget", 1, 2, 8),
-                        ("Gold Nugget", 1, 2, 8),
-                        ("Bone Block", 1, 3, 6),
-                        ("Cooked Porkchop", 1, 1, 1)
+                        (15601, 2, 5, 17),
+                        (18610, 2, 2, 6),
+                        (2818, 2, 1, 5),
+                        (3205, 1, 2, 10),
+                        (5401, 1, 4, 6),
+                        (11502, 1, 4, 6),
+                        (17501, 1, 2, 8),
+                        (17502, 1, 2, 8),
+                        (5603, 1, 3, 6),
+                        (16002, 1, 1, 1)
                     ]
                 },
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
                         (None, 11, 1, 1),
-                        ("Snout Armor Trim Smithing Template", 1, 1, 1)
+                        (19508, 1, 1, 1)
                     ]
                 },
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
                         (None, 9, 1, 1),
-                        ("Netherite Upgrade Smithing Template", 1, 1, 1)
+                        (19501, 1, 1, 1)
                     ]
                 }
             ],
@@ -2398,49 +2400,49 @@ ADVENTURE = {
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
-                        ("Lodestone", 1, 1, 1)
+                        (9501, 1, 1, 1)
                     ]
                 },
                 {
                     "min_rolls": 1, "max_rolls": 2,
                     "items": [
-                        ("Spectral Arrow", 1, 10, 28),
-                        ("Gilded Blackstone", 1, 8, 12),
-                        ("Iron Ingot", 1, 4, 9),
-                        ("Gold Ingot", 1, 4, 9),
-                        ("Crying Obsidian", 1, 3, 8),
-                        ("Crossbow", 1, 1, 1), # damaged / encahnted
-                        ("Block of Gold", 1, 1, 1),
-                        ("Golden Sword", 1, 1, 1),
-                        ("Golden Axe", 1, 1, 1), # enchanted
-                        ("Golden Helmet", 1, 1, 1), # enchanted
-                        ("Golden Chestplate", 1, 1, 1), # enchanted
-                        ("Golden Leggings", 1, 1, 1), # enchanted
-                        ("Golden Boots", 1, 1, 1) # enchanted
+                        (15602, 1, 10, 28),
+                        (2818, 1, 8, 12),
+                        (17206, 1, 4, 9),
+                        (17208, 1, 4, 9),
+                        (5402, 1, 3, 8),
+                        (15502, 1, 1, 1), # damaged / encahnted
+                        (3103, 1, 1, 1),
+                        (14204, 1, 1, 1),
+                        (11903, 1, 1, 1), # enchanted
+                        (14801, 1, 1, 1), # enchanted
+                        (14802, 1, 1, 1), # enchanted
+                        (14803, 1, 1, 1), # enchanted
+                        (14804, 1, 1, 1) # enchanted
                     ]
                 },
                 {
                     "min_rolls": 2, "max_rolls": 4,
                     "items": [
-                        ("Arrow", 1, 5, 17),
-                        ("Iron Nugget", 1, 2, 6),
-                        ("Gold Nugget", 1, 2, 6),
-                        ("String", 1, 1, 6),
-                        ("Leather", 1, 1, 3)
+                        (15601, 1, 5, 17),
+                        (17501, 1, 2, 6),
+                        (17502, 1, 2, 6),
+                        (11502, 1, 1, 6),
+                        (17703, 1, 1, 3)
                     ]
                 },
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
                         (None, 11, 1, 1),
-                        ("Snout Armor Trim Smithing Template", 1, 1, 1)
+                        (19508, 1, 1, 1)
                     ]
                 },
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
                         (None, 9, 1, 1),
-                        ("Netherite Upgrade Smithing Template", 1, 1, 1)
+                        (19501, 1, 1, 1)
                     ]
                 }
             ],
@@ -2448,48 +2450,48 @@ ADVENTURE = {
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
-                        ("Block of Gold", 16, 2, 4),
-                        ("Diamond Shovel", 15, 1, 1), # damaged / enchanted
-                        ("Ancient Debris", 12, 1, 1),
-                        ("Saddle", 12, 1, 1),
-                        ("Diamond Pickaxe", 12, 1, 1), # enchanted
-                        ("Golden Carrot", 10, 8, 17),
-                        ("Golden Apple", 10, 1, 1),
-                        ("Netherite Scrap", 8, 1, 1),
-                        ("Ancient Debris", 5, 2, 2)
+                        (3103, 16, 2, 4),
+                        (12001, 15, 1, 1), # damaged / enchanted
+                        (5803, 12, 1, 1),
+                        (13503, 12, 1, 1),
+                        (12002, 12, 1, 1), # enchanted
+                        (15802, 10, 8, 17),
+                        (15702, 10, 1, 1),
+                        (17404, 8, 1, 1),
+                        (5803, 5, 2, 2)
                     ]
                 },
                 {
                     "min_rolls": 3, "max_rolls": 4,
                     "items": [
-                        ("Arrow", 1, 5, 17),
-                        ("String", 1, 3, 8),
-                        ("Gold Nugget", 1, 2, 8),
-                        ("Crimson Fungus", 1, 2, 7),
-                        ("Crimson Nylium", 1, 2, 7),
-                        ("Crimson Roots", 1, 2, 7),
-                        ("Glowstone", 1, 3, 6),
-                        ("Soul Sand", 1, 2, 7),
-                        ("Cooked Porkchop", 1, 2, 5),
-                        ("Gilded Blackstone", 1, 2, 5),
-                        ("Raw Porkchop", 1, 2, 5),
-                        ("Crying Obsidian", 1, 1, 5),
-                        ("Leather", 1, 1, 3),
-                        ("Golden Axe", 1, 1, 1) # enchanted
+                        (15601, 1, 5, 17),
+                        (11502, 1, 3, 8),
+                        (17502, 1, 2, 8),
+                        (6601, 1, 2, 7),
+                        (5501, 1, 2, 7),
+                        (7001, 1, 2, 7),
+                        (6404, 1, 3, 6),
+                        (5601, 1, 2, 7),
+                        (16002, 1, 2, 5),
+                        (2818, 1, 2, 5),
+                        (15902, 1, 2, 5),
+                        (5402, 1, 1, 5),
+                        (17703, 1, 1, 3),
+                        (11903, 1, 1, 1) # enchanted
                     ]
                 },
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
                         (None, 11, 1, 1),
-                        ("Snout Armor Trim Smithing Template", 1, 1, 1)
+                        (19508, 1, 1, 1)
                     ]
                 },
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
                         (None, 9, 1, 1),
-                        ("Netherite Upgrade Smithing Template", 1, 1, 1)
+                        (19501, 1, 1, 1)
                     ]
                 }
             ],
@@ -2497,51 +2499,51 @@ ADVENTURE = {
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
-                        ("Netherite Upgrade Smithing Template", 1, 1, 1)
+                        (19501, 1, 1, 1)
                     ]
                 },
                 {
                     "min_rolls": 3, "max_rolls": 3,
                     "items": [
-                        ("Netherite Ingot", 15, 1, 1),
-                        ("Ancient Debris", 10, 1, 1),
-                        ("Netherite Scrap", 8, 1, 1),
-                        ("Diamond Spear", 6, 1, 1), # damaged / enchanted
-                        (" Diamond Sword", 6, 1, 1), # damaged / enchanted
-                        ("Diamond Spear", 6, 1, 1),
-                        ("Diamond Sword", 6, 1, 1),
-                        ("Diamond Helmet", 6, 1, 1), # damaged / enchanted
-                        ("Diamond Chestplate", 6, 1, 1), # damaged / enchanted
-                        ("Diamond Leggings", 6, 1, 1), # damaged / enchanted
-                        ("Diamond Boots", 6, 1, 1), # damaged / enchanted
-                        ("Diamond", 5, 2, 6),
-                        ("Diamond Helmet", 5, 1, 1),
-                        ("Diamond Chestplate", 5, 1, 1),
-                        ("Diamond Leggings", 5, 1, 1),
-                        ("Diamond Boots", 5, 1, 1),
-                        ("Ancient Debris", 4, 2, 2),
-                        ("Enchanted Golden Apple", 2, 1, 1)
+                        (17302, 15, 1, 1),
+                        (5803, 10, 1, 1),
+                        (17404, 8, 1, 1),
+                        (20906, 6, 1, 1), # damaged / enchanted
+                        (14205, 6, 1, 1), # damaged / enchanted
+                        (20906, 6, 1, 1),
+                        (14205, 6, 1, 1),
+                        (14901, 6, 1, 1), # damaged / enchanted
+                        (14902, 6, 1, 1), # damaged / enchanted
+                        (14903, 6, 1, 1), # damaged / enchanted
+                        (14904, 6, 1, 1), # damaged / enchanted
+                        (17204, 5, 2, 6),
+                        (14901, 5, 1, 1),
+                        (14902, 5, 1, 1),
+                        (14903, 5, 1, 1),
+                        (14904, 5, 1, 1),
+                        (5803, 4, 2, 2),
+                        (15703, 2, 1, 1)
                     ]
                 },
                 {
                     "min_rolls": 3, "max_rolls": 4,
                     "items": [
-                        ("Spectral Arrow", 1, 12, 25),
-                        ("Nether Quartz", 1, 8, 23),
-                        ("Gilded Blackstone", 1, 5, 15),
-                        ("Iron Ingot", 1, 3, 9),
-                        ("Gold Ingot", 1, 3, 9),
-                        ("Magma Cream", 1, 3, 8),
-                        ("Crying Obsidian", 1, 3, 5),
-                        ("Block of Iron", 1, 2, 5),
-                        ("Block of Gold", 1, 2, 5)
+                        (15602, 1, 12, 25),
+                        (17301, 1, 8, 23),
+                        (2818, 1, 5, 15),
+                        (17206, 1, 3, 9),
+                        (17208, 1, 3, 9),
+                        (18610, 1, 3, 8),
+                        (5402, 1, 3, 5),
+                        (3102, 1, 2, 5),
+                        (3103, 1, 2, 5)
                     ]
                 },
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
                         (None, 11, 1, 1),
-                        ("Snout Armor Trim Smithing Template", 1, 1, 1)
+                        (19508, 1, 1, 1)
                     ]
                 }
             ],
@@ -2549,26 +2551,26 @@ ADVENTURE = {
                 {
                     "min_rolls": 2, "max_rolls": 4,
                     "items": [
-                        ("Gold Ingot", 15, 1, 3),
-                        ("Saddle", 10, 1, 1),
-                        ("Golden Horse Armor", 8, 1, 1),
-                        ("Nether Wart", 5, 3, 7),
-                        ("Iron Ingot", 5, 1, 5),
-                        ("Diamond", 5, 1, 3),
-                        ("Copper Horse Armor", 5, 1, 1),
-                        ("Flint and Steel", 5, 1, 1),
-                        ("Iron Horse Armor", 5, 1, 1),
-                        ("Golden Sword", 5, 1, 1),
-                        ("Golden Chestplate", 5, 1, 1),
-                        ("Diamond Horse Armor", 3, 1, 1),
-                        ("Obsidian", 2, 2, 4)
+                        (17208, 15, 1, 3),
+                        (13503, 10, 1, 1),
+                        (15203, 8, 1, 1),
+                        (7413, 5, 3, 7),
+                        (17206, 5, 1, 5),
+                        (17204, 5, 1, 3),
+                        (15206, 5, 1, 1),
+                        (12401, 5, 1, 1),
+                        (15202, 5, 1, 1),
+                        (14204, 5, 1, 1),
+                        (14802, 5, 1, 1),
+                        (15204, 3, 1, 1),
+                        (5401, 2, 2, 4)
                     ]
                 },
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
                         (None, 14, 1, 1),
-                        ("Rib Armor Trim Smithing Template", 1, 1, 1)
+                        (19505, 1, 1, 1)
                     ]
                 }
             ]
@@ -2587,38 +2589,38 @@ ADVENTURE = {
                 {
                     "min_rolls": 2, "max_rolls": 6,
                     "items": [
-                        ("Gold Ingot", 15, 2, 7),
-                        ("Iron Ingot", 10, 4, 8),
-                        ("Beetroot Seeds", 5, 1, 10),
-                        ("Diamond", 5, 2, 7),
-                        ("Saddle", 3, 1, 1),
-                        ("Iron Pickaxe", 3, 1, 1), # enchanted
-                        ("Iron Shovel", 3, 1, 1), # enchanted
-                        ("Iron Sword", 3, 1, 1), # enchanted
-                        ("Iron Helmet", 3, 1, 1), # enchanted
-                        ("Iron Chestplate", 3, 1, 1), # enchanted
-                        ("Iron Leggings", 3, 1, 1), # enchanted
-                        ("Iron Boots", 3, 1, 1), # enchanted
-                        ("Diamond Pickaxe", 3, 1, 1), # enchanted
-                        ("Diamond Shovel", 3, 1, 1), # enchanted
-                        ("Diamond Spear", 3, 1, 1), # enchanted
-                        ("Diamond Sword", 3, 1, 1), # enchanted
-                        ("Diamond Helmet", 3, 1, 1), # enchanted
-                        ("Diamond Chestplate", 3, 1, 1), # enchanted
-                        ("Diamond Leggings", 3, 1, 1), # enchanted
-                        ("Diamond Boots", 3, 1, 1), # enchanted
-                        ("Emerald", 2, 2, 6),
-                        ("Copper Horse Armor", 1, 1, 1),
-                        ("Iron Horse Armor", 1, 1, 1),
-                        ("Golden Horse Armor", 1, 1, 1),
-                        ("Diamond Horse Armor", 1, 1, 1)
+                        (17208, 15, 2, 7),
+                        (17206, 10, 4, 8),
+                        (7410, 5, 1, 10),
+                        (17204, 5, 2, 7),
+                        (13503, 3, 1, 1),
+                        (11802, 3, 1, 1), # enchanted
+                        (11801, 3, 1, 1), # enchanted
+                        (14203, 3, 1, 1), # enchanted
+                        (14701, 3, 1, 1), # enchanted
+                        (14702, 3, 1, 1), # enchanted
+                        (14703, 3, 1, 1), # enchanted
+                        (14704, 3, 1, 1), # enchanted
+                        (12002, 3, 1, 1), # enchanted
+                        (12001, 3, 1, 1), # enchanted
+                        (20906, 3, 1, 1), # enchanted
+                        (14205, 3, 1, 1), # enchanted
+                        (14901, 3, 1, 1), # enchanted
+                        (14902, 3, 1, 1), # enchanted
+                        (14903, 3, 1, 1), # enchanted
+                        (14904, 3, 1, 1), # enchanted
+                        (17202, 2, 2, 6),
+                        (15206, 1, 1, 1),
+                        (15202, 1, 1, 1),
+                        (15203, 1, 1, 1),
+                        (15204, 1, 1, 1)
                     ]
                 },
                 {
                     "min_rolls": 1, "max_rolls": 1,
                     "items": [
                         (None, 14, 1, 1),
-                        ("Spire Armor Trim Smithing Template", 1, 1, 1)
+                        (19509, 1, 1, 1)
                     ]
                 }
             ]

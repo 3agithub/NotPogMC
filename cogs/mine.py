@@ -3,7 +3,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 from random import randint
-from loot_tables import MINE as LOOT_TABLES
+from loot_tables import ITEM_REGISTRY, MINE as LOOT_TABLES
 from cogs.inventory import save_player_loot
 from configs import MINE_CD
 
@@ -22,7 +22,8 @@ class Mine(commands.Cog):
             return
 
         bucket = self.cooldown.get_bucket(ctx.message)
-        retry_after = bucket.update_rate_limit()
+        current_timestamp = datetime.datetime.now(datetime.timezone.utc).timestamp()
+        retry_after = bucket.update_rate_limit(current_timestamp)
         
         if retry_after:
             bucket._tokens = 0
@@ -66,11 +67,13 @@ class Mine(commands.Cog):
         loot_lines = []
         drops_to_save = []
         
-        for name, min_val, max_val in LOOT_TABLES["overworld"]:
+        for item_id, min_val, max_val in LOOT_TABLES["overworld"]:
             amount, roll_val = loot_num(min_val, max_val)
             if amount > 0:
-                loot_lines.append(f"- {name} ×{amount} ({roll_val})")
-                drops_to_save.append((name, amount))
+                item_name = ITEM_REGISTRY.get(item_id, f"Unknown (ID: {item_id})")
+                loot_lines.append(f"- {item_name} ×{amount} ({roll_val})")
+                drops_to_save.append((item_id, amount))
+
 
         if drops_to_save:
             await save_player_loot(self.bot.db, ctx.author.id, drops_to_save)
@@ -95,11 +98,12 @@ class Mine(commands.Cog):
         loot_lines = []
         drops_to_save = []
         
-        for name, min_val, max_val in LOOT_TABLES["nether"]:
+        for item_id, min_val, max_val in LOOT_TABLES["nether"]:
             amount, roll_val = loot_num(min_val, max_val)
             if amount > 0:
-                loot_lines.append(f"- {name} ×{amount} ({roll_val})")
-                drops_to_save.append((name, amount))
+                item_name = ITEM_REGISTRY.get(item_id, f"Unknown (ID: {item_id})")
+                loot_lines.append(f"- {item_name} ×{amount} ({roll_val})")
+                drops_to_save.append((item_id, amount))
 
         if drops_to_save:
             await save_player_loot(self.bot.db, ctx.author.id, drops_to_save)
@@ -124,11 +128,12 @@ class Mine(commands.Cog):
         loot_lines = []
         drops_to_save = []
         
-        for name, min_val, max_val in LOOT_TABLES["end"]:
+        for item_id, min_val, max_val in LOOT_TABLES["end"]:
             amount, roll_val = loot_num(min_val, max_val)
             if amount > 0:
-                loot_lines.append(f"- {name} ×{amount} ({roll_val})")
-                drops_to_save.append((name, amount))
+                item_name = ITEM_REGISTRY.get(item_id, f"Unknown (ID: {item_id})")
+                loot_lines.append(f"- {item_name} ×{amount} ({roll_val})")
+                drops_to_save.append((item_id, amount))
 
         if drops_to_save:
             await save_player_loot(self.bot.db, ctx.author.id, drops_to_save)

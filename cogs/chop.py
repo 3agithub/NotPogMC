@@ -3,7 +3,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 from random import randint
-from loot_tables import CHOP as LOOT_TABLES
+from loot_tables import ITEM_REGISTRY, CHOP as LOOT_TABLES
 from cogs.inventory import save_player_loot
 from configs import CHOP_CD
 
@@ -35,10 +35,10 @@ def run_chop_action(dimension) -> dict:
     tree_config = dim_data["tree_data"][selected_tree_id]
 
     final_drops = []
-    for item_name, min_amt, max_amt in tree_config["drops"]:
+    for item_id, min_amt, max_amt in tree_config["drops"]:
         amount, roll_val = loot_num(min_amt, max_amt)
         if amount > 0:
-            final_drops.append((item_name, amount, roll_val))
+            final_drops.append((item_id, amount, roll_val))
 
     return {
         "biome": selected_biome,
@@ -57,7 +57,8 @@ class Chop(commands.Cog):
             return
 
         bucket = self.cooldown.get_bucket(ctx.message)
-        retry_after = bucket.update_rate_limit()
+        current_timestamp = datetime.datetime.now(datetime.timezone.utc).timestamp()
+        retry_after = bucket.update_rate_limit(current_timestamp)
         
         if retry_after:
             bucket._tokens = 0
@@ -69,7 +70,7 @@ class Chop(commands.Cog):
                 timestamp=datetime.datetime.now(datetime.timezone.utc)
             )
             embed.set_author(name=ctx.author.name, icon_url=ctx.author.display_avatar.url)
-            embed.set_footer(text=f"Shard #{ctx.guild.shard_id + 1}")
+            embed.set_footer(text=f"Shard #{ctx.guild.shard_id + 1 if ctx.guild else 1}")
             
             await ctx.send(embed=embed)
             raise commands.CheckFailure("User is currently on an active chopping cooldown.")
@@ -103,11 +104,13 @@ class Chop(commands.Cog):
             return await ctx.send(result["error"])
 
         if result.get("drops"):
-            await save_player_loot(self.bot.db, ctx.author.id, result["drops"])
+            drops_to_save = [(item_id, amt) for item_id, amt, roll_val in result["drops"]]
+            await save_player_loot(self.bot.db, ctx.author.id, drops_to_save)
 
         loot_lines = []
-        for name, amt, roll_val in result["drops"]:
-            loot_lines.append(f"- {name} ×{amt} ({roll_val})")
+        for item_id, amt, roll_val in result["drops"]:
+            item_name = ITEM_REGISTRY.get(item_id, f"Unknown (ID: {item_id})")
+            loot_lines.append(f"- {item_name} ×{amt} ({roll_val})")
 
         ow_desc = (
             f"You venture into the Overworld, searching through a {result['biome']}.\n"
@@ -131,11 +134,13 @@ class Chop(commands.Cog):
             return await ctx.send(result["error"])
         
         if result.get("drops"):
-            await save_player_loot(self.bot.db, ctx.author.id, result["drops"])
+            drops_to_save = [(item_id, amt) for item_id, amt, roll_val in result["drops"]]
+            await save_player_loot(self.bot.db, ctx.author.id, drops_to_save)
 
         loot_lines = []
-        for name, amt, roll_val in result["drops"]:
-            loot_lines.append(f"- {name} ×{amt} ({roll_val})")
+        for item_id, amt, roll_val in result["drops"]:
+            item_name = ITEM_REGISTRY.get(item_id, f"Unknown (ID: {item_id})")
+            loot_lines.append(f"- {item_name} ×{amt} ({roll_val})")
 
         nether_desc = (
             f"You step into the fiery Nether, arriving inside a dense {result['biome']}.\n"
@@ -159,11 +164,13 @@ class Chop(commands.Cog):
             return await ctx.send(result["error"])
 
         if result.get("drops"):
-            await save_player_loot(self.bot.db, ctx.author.id, result["drops"])
+            drops_to_save = [(item_id, amt) for item_id, amt, roll_val in result["drops"]]
+            await save_player_loot(self.bot.db, ctx.author.id, drops_to_save)
 
         loot_lines = []
-        for name, amt, roll_val in result["drops"]:
-            loot_lines.append(f"- {name} ×{amt} ({roll_val})")
+        for item_id, amt, roll_val in result["drops"]:
+            item_name = ITEM_REGISTRY.get(item_id, f"Unknown (ID: {item_id})")
+            loot_lines.append(f"- {item_name} ×{amt} ({roll_val})")
 
         end_desc = (
             f"You rift into the cold void of the End and travel out to the {result['biome']}.\n"
