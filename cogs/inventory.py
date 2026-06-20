@@ -6,6 +6,7 @@ from discord.ext import commands
 import aiosqlite
 import bisect
 from loot_tables import ITEM_REGISTRY
+from configs import STACK_SIZE
 
 async def save_player_loot(db_connection: aiosqlite.Connection, user_id: int, drops: list):
     if not drops:
@@ -45,14 +46,23 @@ class Paginator(discord.ui.View):
         self.update_buttons()
 
     def format_quantity(self, item_name, quantity):
-        if self.quantity_display == "Raw":
+        max_stack = 64
+        for size, ids in STACK_SIZE.items():
+            if self.id in ids:
+                max_stack = size
+                break
+
+        if max_stack == 1 or self.quantity_display == "Raw":
             return f"{item_name} [×{quantity}]"
-        if quantity >= 64:
-            return f"{item_name} [×{floor(quantity/64)}s{quantity%64:02d}]"
+            
+        if quantity >= max_stack:
+            return f"{item_name} [×{quantity//max_stack}s{quantity%max_stack:02d}]"
         return f"{item_name} [×{quantity}]"
+
 
     def process_data(self):
         if self.view_mode == "Categories":
+
             self.max_items_per_page = 9
             raw_categories = {}
             for item_id, quantity in self.rows:
@@ -62,11 +72,11 @@ class Paginator(discord.ui.View):
                 category_name, header_id = self.cog._get_item_category_details(item_id)
                 item_name = ITEM_REGISTRY.get(item_id, f"Unknown Item (ID: {item_id})")
                 
+                self.id = item_id
                 item_line = self.format_quantity(item_name, quantity)
 
                 item_entry = {
                     "id": item_id,
-
                     "quantity": quantity,
                     "line": item_line
                 }
@@ -102,6 +112,7 @@ class Paginator(discord.ui.View):
                     continue
 
                 item_name = ITEM_REGISTRY.get(item_id, f"Unknown Item (ID: {item_id})")
+                self.id = item_id
                 item_line = self.format_quantity(item_name, quantity)
 
                 self.flat_items.append({
