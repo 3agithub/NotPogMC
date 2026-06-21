@@ -61,14 +61,15 @@ CHOP = {
 ADVENTURE = {
     "overworld": {
         "biomes": {
-            "desert": {"weight": 40, "allowed_structures": ["desert pyramid", "none"]},
-            "jungle": {"weight": 30, "allowed_structures": ["jungle pyramid", "none"]},
-            "ocean": {"weight": 30, "allowed_structures": ["shipwreck", "none"]}
+            "desert": {"weight": 40, "allowed_structures": ["desert pyramid", "ruined portal", "none"]},
+            "jungle": {"weight": 30, "allowed_structures": ["jungle pyramid", "ruined portal", "none"]},
+            "ocean": {"weight": 30, "allowed_structures": ["shipwreck", "ruined portal", "none"]}
         },
         "structures": {
             "desert pyramid": {"weight": 70, "chests": (4, 4), "use_pools": True},
-            "jungle pyramid": {"weight": 60, "chests": (2, 2), "use_pools": True},
+            "jungle pyramid": {"weight": 60, "chests": (2, 3), "use_pools": True},
             "shipwreck": {"weight": 80, "use_pools": True, "unique_chests": True},
+            "ruined portal": {"weight": 30, "chests": (1, 1), "use_pools": True},
             "none": {"weight": 30, "chests": (0, 0), "use_pools": False} 
         },
         "loot_pools": {
@@ -252,23 +253,72 @@ ADVENTURE = {
                         (15211, 2, 1, 1)
                     ]
                 }
+            ],
+            "ruined_portal_pools": [
+                {
+                    "min_rolls": 4, "max_rolls": 8,
+                    "items": [
+                        (17501, 40, 9, 18),
+                        (17602, 40, 1, 4),
+                        (5401, 40, 1, 2),
+                        (12501, 40, 1, 1),
+                        (12401, 40, 1, 1),
+                        (17502, 15, 4, 24),
+                        (15702, 15, 1, 1),
+                        (11903, 15, 1, 1), # enchanted
+                        (11904, 15, 1, 1), # enchanted
+                        (11902, 15, 1, 1), # enchanted
+                        (11901, 15, 1, 1), # enchanted
+                        (14204, 15, 1, 1), # enchanted
+                        (14801, 15, 1, 1), # enchanted
+                        (14802, 15, 1, 1), # enchanted
+                        (14803, 15, 1, 1), # enchanted
+                        (14804, 15, 1, 1), # enchanted
+                        (18609, 5, 4, 12),
+                        (17208, 5, 2, 8),
+                        (13201, 5, 1, 1),
+                        (3301, 5, 1, 1),
+                        (15203, 5, 1, 1),
+                        (3103, 1, 1, 2),
+                        (9103, 1, 1, 1),
+                        (15703, 1, 1, 1)
+                    ]
+                },
+                {
+                    "min_rolls": 1, "max_rolls": 1,
+                    "items": [
+                        (9501, 2, 1, 2),
+                        (None, 1, 1, 1)
+                    ]
+                },
+                { # structure gold blocks
+                    "min_rolls": 1, "max_rolls": 1,
+                    "items": [
+                        (3103, 1, 0, 0),
+                        (3103, 2, 1, 1),
+                        (3103, 7, 2, 2),
+                        (3103, 2, 3, 3),
+                        (3103, 1, 6, 6)
+                    ]
+                }
             ]
         }
     },
     "nether": {
         "biomes": {
-            "nether wastes": {"weight": 50, "allowed_structures": ["nether fortress", "bastion remnant with a bridge", "bastion remnant with hoglin stables", "bastion remnant with housing units", "bastion remnant with a treasure unit", "none"]},
-            "crimson forest": {"weight": 50, "allowed_structures": ["nether fortress", "bastion remnant with a bridge", "bastion remnant with hoglin stables", "bastion remnant with housing units", "bastion remnant with a treasure unit", "none"]},
-            "warped forest": {"weight": 50, "allowed_structures": ["nether fortress", "bastion remnant with a bridge", "bastion remnant with hoglin stables", "bastion remnant with housing units", "bastion remnant with a treasure unit", "none"]},
-            "soul sand valley": {"weight": 30, "allowed_structures": ["nether fortress", "bastion remnant with a bridge", "bastion remnant with hoglin stables", "bastion remnant with housing units", "bastion remnant with a treasure unit", "none"]},
+            "nether wastes": {"weight": 50, "allowed_structures": ["nether fortress", "bastion remnant with a bridge", "bastion remnant with hoglin stables", "bastion remnant with housing units", "bastion remnant with a treasure unit", "ruined portal", "none"]},
+            "crimson forest": {"weight": 50, "allowed_structures": ["nether fortress", "bastion remnant with a bridge", "bastion remnant with hoglin stables", "bastion remnant with housing units", "bastion remnant with a treasure unit", "ruined portal", "none"]},
+            "warped forest": {"weight": 50, "allowed_structures": ["nether fortress", "bastion remnant with a bridge", "bastion remnant with hoglin stables", "bastion remnant with housing units", "bastion remnant with a treasure unit", "ruined portal", "none"]},
+            "soul sand valley": {"weight": 30, "allowed_structures": ["nether fortress", "bastion remnant with a bridge", "bastion remnant with hoglin stables", "bastion remnant with housing units", "bastion remnant with a treasure unit", "ruined portal", "none"]},
             "basalt deltas": {"weight": 30, "allowed_structures": ["nether fortress", "none"]}
         },
         "structures": {
-            "nether fortress": {"weight": 50, "chests": (2, 6), "use_pools": True},
-            "bastion remnant with a bridge": {"weight": 25, "chests": (5, 18), "use_pools": True, "generic_ratio": 3, "specific_ratio": 1},
-            "bastion remnant with hoglin stables": {"weight": 25, "chests": (4, 12), "use_pools": True, "generic_ratio": 4, "specific_ratio": 1},
-            "bastion remnant with housing units": {"weight": 25, "chests": (7, 16), "use_pools": True, "generic_ratio": 1, "specific_ratio": 0},
-            "bastion remnant with a treasure unit": {"weight": 25, "chests": (8, 25), "use_pools": True, "generic_ratio": 9, "specific_ratio": 1},
+            "nether fortress": {"weight": 100, "chests": (2, 6), "use_pools": True},
+            "bastion remnant with a bridge": {"weight": 40, "chests": (5, 18), "use_pools": True, "generic_ratio": 3, "specific_ratio": 1},
+            "bastion remnant with hoglin stables": {"weight": 20, "chests": (4, 12), "use_pools": True, "generic_ratio": 4, "specific_ratio": 1},
+            "bastion remnant with housing units": {"weight": 30, "chests": (7, 16), "use_pools": True, "generic_ratio": 1, "specific_ratio": 0},
+            "bastion remnant with a treasure unit": {"weight": 10, "chests": (8, 25), "use_pools": True, "generic_ratio": 9, "specific_ratio": 1},
+            "ruined portal": {"weight": 30, "chests": (1, 1), "use_pools": True},
             "none": {"weight": 20, "chests": (0, 0), "use_pools": False}
         },
 
@@ -514,6 +564,54 @@ ADVENTURE = {
                     "items": [
                         (None, 14, 1, 1),
                         (19505, 1, 1, 1)
+                    ]
+                }
+            ],
+            "ruined_portal_pools": [
+                {
+                    "min_rolls": 4, "max_rolls": 8,
+                    "items": [
+                        (17501, 40, 9, 18),
+                        (17602, 40, 1, 4),
+                        (5401, 40, 1, 2),
+                        (12501, 40, 1, 1),
+                        (12401, 40, 1, 1),
+                        (17502, 15, 4, 24),
+                        (15702, 15, 1, 1),
+                        (11903, 15, 1, 1), # enchanted
+                        (11904, 15, 1, 1), # enchanted
+                        (11902, 15, 1, 1), # enchanted
+                        (11901, 15, 1, 1), # enchanted
+                        (14204, 15, 1, 1), # enchanted
+                        (14801, 15, 1, 1), # enchanted
+                        (14802, 15, 1, 1), # enchanted
+                        (14803, 15, 1, 1), # enchanted
+                        (14804, 15, 1, 1), # enchanted
+                        (18609, 5, 4, 12),
+                        (17208, 5, 2, 8),
+                        (13201, 5, 1, 1),
+                        (3301, 5, 1, 1),
+                        (15203, 5, 1, 1),
+                        (3103, 1, 1, 2),
+                        (9103, 1, 1, 1),
+                        (15703, 1, 1, 1)
+                    ]
+                },
+                {
+                    "min_rolls": 1, "max_rolls": 1,
+                    "items": [
+                        (9501, 2, 1, 2),
+                        (None, 1, 1, 1)
+                    ]
+                },
+                { # structure gold blocks
+                    "min_rolls": 1, "max_rolls": 1,
+                    "items": [
+                        (3103, 1, 0, 0),
+                        (3103, 2, 1, 1),
+                        (3103, 7, 2, 2),
+                        (3103, 2, 3, 3),
+                        (3103, 1, 6, 6)
                     ]
                 }
             ]

@@ -270,7 +270,7 @@ class Adventure(commands.Cog):
             adv_desc = (
                 f"{discovery_text}"
                 "You spent hours wandering through the endless landscape but couldn't safely track down any structures!\n"
-                "You return empty-handed this time.\n"
+                "You return empty-handed this time.\n\n"
                 "Number of Chests: 0"
             )
         else:
